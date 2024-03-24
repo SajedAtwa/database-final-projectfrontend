@@ -1,0 +1,33 @@
+.home-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header-search-section {
+    background-color: #4C3A70;
+    color: white;
+}
+
+.category-section {
+    background-color: #FFFFFF;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.category-section h2 {
+    margin: 0;
+    padding: 20px;
+}
+
+.InfoSection {
+    background-color: #E4E0F5;
+    padding: 20px 0;
+}
+
+.Footer {
+    background-color: #7a57d1;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
