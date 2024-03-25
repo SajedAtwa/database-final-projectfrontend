@@ -7,20 +7,16 @@ header {
     padding: 1rem 20px;
     margin: 0;
     width: 100%;
+    z-index: 1000;
+    /* Ensure header is above other content */
 }
 
-header .logo img {
-    height: 50px;
-}
-
-header nav {
-    display: flex;
-    align-items: center;
-}
-
+header .logo a,
 header nav a {
     color: white;
-    margin-left: 20px;
+    /* Explicitly set link colors */
+    font-weight: bold;
+    /* Make the text bold */
     text-decoration: none;
     padding: 8px 12px;
     border-radius: 4px;
@@ -29,5 +25,15 @@ header nav a {
 
 header nav a:hover {
     background-color: #5C5470;
-    text-decoration: none;
+    /* Darker shade on hover */
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+}
+
+header .logo a {
+    font-size: 1.5em;
+    /* Larger size for the logo text */
 }
