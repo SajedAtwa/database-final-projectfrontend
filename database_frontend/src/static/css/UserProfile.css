@@ -1,0 +1,55 @@
+.user-profile-sidebar {
+    width: 250px;
+    background-color: #826fa9;
+    padding: 1rem;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+}
+
+.user-profile-sidebar h2 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.user-profile-info {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.user-profile-info p {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.user-profile-avatar {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.user-profile-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-profile-edit-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #5C5470;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+}
+
+.user-profile-edit-btn:hover {
+    background-color: #6e5d8a;
+}
