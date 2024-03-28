@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Header from './Header';
 import MainSearchBar from './MainSearchBar';
@@ -14,7 +15,9 @@ function HomePage() {
     return (
         <div className="home-page">
             <Header />
-            <MainSearchBar onSearch={handleSearch} />
+            <div className="search-section">
+                <MainSearchBar onSearch={handleSearch} />
+            </div>
             <div className="category-section">
                 <h2>Popular Repairs</h2>
                 <CategoryList />

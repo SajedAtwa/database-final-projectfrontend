@@ -1,37 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import '../static/css/SignIn.css';
 
 function SignIn() {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const history = useHistory();
+    const location = useLocation();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Signing in with:', email, password);
-        // Handle the sign in,
+
+    const [successMessage, setSuccessMessage] = useState('');
+
+    useEffect(() => {
+
+        if (location.state?.successMessage) {
+            setSuccessMessage(location.state.successMessage);
+
+            history.replace({ ...location, state: {} });
+        }
+    }, [location, history]);
+
+    const handleSignIn = async (event) => {
+        event.preventDefault();
+        setErrorMessage('');
+
+        const response = await fetch('http://127.0.0.1:5000/users/signin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password_hash: password }),
+        });
+
+        const data = await response.json();
+        if (data.error) {
+            setErrorMessage('Username or password is incorrect. Please try again.');
+        } else {
+            localStorage.setItem('user', JSON.stringify({ username, uid: data.uid }));
+            history.push('/dashboard');
+        }
     };
 
     return (
         <div className="signin-container">
-            <form onSubmit={handleSubmit} className="signin-form">
+            {successMessage && <div className="signin-success">{successMessage}</div>}
+            {errorMessage && <div className="signin-error">{errorMessage}</div>}
+            <form onSubmit={handleSignIn} className="signin-form">
                 <h2>Sign In</h2>
-                <label htmlFor="email">Email:</label>
-                <input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <label htmlFor="password">Password:</label>
-                <input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">Sign In</button>
+                <div className="input-group">
+                    <label htmlFor="username">Username:</label>
+                    <input
+                        id="username"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="input-group">
+                    <label htmlFor="password">Password:</label>
+                    <input
+                        id="password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit" className="signin-button">Sign In</button>
             </form>
         </div>
     );

@@ -12,7 +12,7 @@ function BookingConfirmation({ bookingDetails, onConfirm, onCancel }) {
             <p>Time: {new Date(bookingDetails.time).toLocaleTimeString()}</p>
             <p>Shop: {bookingDetails.shopName}</p>
             <p>Location: {bookingDetails.location}</p>
-            {/* Include other relevant details here */}
+
 
             {/* Confirmation and Cancel buttons */}
             <div className="actions">

@@ -1,5 +1,5 @@
 header {
-    background-color: #4C3A70;
+    background-color: #826fa9;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -8,15 +8,12 @@ header {
     margin: 0;
     width: 100%;
     z-index: 1000;
-    /* Ensure header is above other content */
 }
 
 header .logo a,
 header nav a {
     color: white;
-    /* Explicitly set link colors */
     font-weight: bold;
-    /* Make the text bold */
     text-decoration: none;
     padding: 8px 12px;
     border-radius: 4px;
@@ -25,7 +22,6 @@ header nav a {
 
 header nav a:hover {
     background-color: #5C5470;
-    /* Darker shade on hover */
 }
 
 header nav {
@@ -35,5 +31,5 @@ header nav {
 
 header .logo a {
     font-size: 1.5em;
-    /* Larger size for the logo text */
+
 }

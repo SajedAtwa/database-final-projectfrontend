@@ -7,7 +7,7 @@ function ServiceDetail({ service }) {
         <div className="service-detail">
             <h3>{service.name}</h3>
             <p>{service.description}</p>
-            {/* Include additional details and a button to proceed to booking */}
+
         </div>
     );
 }
