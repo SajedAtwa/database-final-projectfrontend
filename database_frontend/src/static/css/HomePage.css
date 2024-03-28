@@ -6,6 +6,7 @@
 
 .search-section {
     background-color: #ffffff;
+    text-align: center;
     padding: 2rem 0;
     width: 100%;
 }
@@ -22,6 +23,7 @@
 }
 
 .category-section h2 {
+    color: #3f3f7c;
     margin: 0;
     padding: 20px;
     background-color: transparent;
@@ -29,11 +31,13 @@
 
 .info-section {
     background-color: #e3f2fd;
+    /* Very light sky blue for a subtle distinction */
     padding: 20px 0;
 }
 
 .footer {
     background-color: #c3dceb;
+    /* Muted blue-grey to anchor the footer */
     color: #fff;
     text-align: center;
     padding: 20px 0;

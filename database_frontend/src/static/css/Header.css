@@ -1,13 +1,14 @@
+/* Header.css */
 header {
-    background-color: #826fa9;
+    background-color: #996fa9;
     color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 20px;
-    margin: 0;
+    padding: 1rem;
     width: 100%;
-    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
 }
 
 header .logo a,
@@ -20,16 +21,39 @@ header nav a {
     transition: background-color 0.3s;
 }
 
+header .logo a:hover,
 header nav a:hover {
     background-color: #5C5470;
+
+}
+
+header .logo a {
+    font-size: 1.5rem;
+
 }
 
 header nav {
     display: flex;
-    align-items: center;
+    gap: 10px;
+
 }
 
-header .logo a {
-    font-size: 1.5em;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+    }
 
+    header nav {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    header nav a {
+        width: 100%;
+        text-align: center;
+
+    }
 }
