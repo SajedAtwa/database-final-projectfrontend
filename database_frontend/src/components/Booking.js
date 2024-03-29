@@ -6,6 +6,8 @@ function BookingCreate() {
         service: '',
         date: '',
         time: '',
+        uid: '',
+        businessId: '',
     });
 
     const handleChange = (e) => {
@@ -14,16 +16,12 @@ function BookingCreate() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const response = await fetch('/bookings/create', {
+        const response = await fetch('http://127.0.0.1:5000/bookings/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                ...bookingDetails,
-
-            }),
+            body: JSON.stringify(bookingDetails),
         });
         const data = await response.json();
         if (data.error) {
@@ -38,39 +36,7 @@ function BookingCreate() {
         <div className="booking-create-container">
             <form onSubmit={handleSubmit} className="booking-create-form">
                 <h2>Create Booking</h2>
-                <div className="input-group">
-                    <label htmlFor="service">Service:</label>
-                    <input
-                        id="service"
-                        name="service"
-                        type="text"
-                        value={bookingDetails.service}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="input-group">
-                    <label htmlFor="date">Date:</label>
-                    <input
-                        id="date"
-                        name="date"
-                        type="date"
-                        value={bookingDetails.date}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="input-group">
-                    <label htmlFor="time">Time:</label>
-                    <input
-                        id="time"
-                        name="time"
-                        type="time"
-                        value={bookingDetails.time}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+
                 <button type="submit">Create Booking</button>
             </form>
         </div>
