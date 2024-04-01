@@ -1,0 +1,43 @@
+.home-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.search-section {
+    background-color: #ffffff;
+    text-align: center;
+    padding: 3rem 0;
+    width: 100%;
+}
+
+.search-section h1 {
+    color: #7070bf;
+    margin: 0;
+}
+
+.category-section {
+    background-color: #e7def1;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.category-section h2 {
+    color: #3f3f7c;
+    margin: 0;
+    padding: 20px;
+    background-color: transparent;
+}
+
+.info-section {
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    width: 100%;
+}
+
+.footer {
+    background-color: #c3dceb;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
