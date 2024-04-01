@@ -5,6 +5,7 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import UserDashboard from './components/UserDashboard';
 import './App.css';
+import RepairService from './components/RepairService';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <Route path="/dashboard" component={UserDashboard} />
+        <Route path='/repairservice' component={RepairService}/>
 
 
       </Switch>
