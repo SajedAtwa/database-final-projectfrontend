@@ -1,5 +1,5 @@
 .info-section {
-    background-color: #E4E0F5;
+    background-color: #ffffff;
     padding: 40px 20px;
     text-align: center;
 }
@@ -12,14 +12,15 @@
 }
 
 .info-point {
-    background-color: #fff;
+    background-color: #d8e6ff;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 .info-point-number {
-    background-color: #7a57d1;
+    background-color: #7697e0;
     color: #fff;
     height: 40px;
     width: 40px;
@@ -29,4 +30,31 @@
     justify-content: center;
     margin: 0 auto 16px;
     font-size: 24px;
+}
+
+.info-point-icon {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.info-section p,
+.info-point p {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .info-points {
+        grid-template-columns: 1fr;
+    }
+
+    .info-point {
+        padding: 20px;
+    }
+
+    .info-point-icon {
+        max-width: 80px;
+    }
 }

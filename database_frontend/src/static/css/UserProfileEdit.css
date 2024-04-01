@@ -1,52 +1,40 @@
-.user-profile-edit-container {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-}
-
 .user-profile-edit-form {
-    width: 100%;
-    max-width: 500px;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
-.user-profile-edit-form h2 {
-    text-align: center;
-    color: #333;
+.user-profile-edit-form label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
 }
 
-.input-group {
-    margin-bottom: 20px;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.input-group input,
-.input-group textarea {
+.user-profile-edit-form input[type="text"],
+.user-profile-edit-form input[type="email"] {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+}
+
+.user-profile-edit-form input[type="file"] {
+    margin-bottom: 1rem;
 }
 
 .user-profile-edit-form button {
-    width: 100%;
-    background-color: #4CAF50;
+    background-color: #5C5470;
     color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
     border: none;
     border-radius: 4px;
+    padding: 10px;
     cursor: pointer;
+    text-align: center;
 }
 
 .user-profile-edit-form button:hover {
-    background-color: #45a049;
+    background-color: #6e5d8a;
 }

@@ -1,9 +1,9 @@
 // dbSearch.js
 import axios from 'axios';
 
-export async function dbSearch(issue, zipCode, startDateTime, endDateTime) {
+export async function dbSearch(services, zipCode, startDateTime, endDateTime) {
     const submission = {
-        issue,
+        services,
         zip_code: zipCode,
         start_datetime: startDateTime,
         end_datetime: endDateTime,

@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+// UserDashboard.js
+import React from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserProfile from './UserProfile';
 import '../static/css/UserDashboard.css';
@@ -41,50 +43,50 @@ function UserDashboard() {
         history.push('/book-service');
     };
 
-    // Placeholder function for saving profile
     const onSaveProfile = (userData) => {
-        console.log('Profile saved', userData);
-
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
     };
 
     return (
-        <div className="user-dashboard">
-            <h1>Welcome, {user.username}!</h1>
-
+        <div className="user-container">
             <UserProfile user={user} onSaveProfile={onSaveProfile} />
+            <div className="user-dashboard">
+                <h1>Welcome, {user.username}!</h1>
 
-            <div className="dashboard-section">
-                <h2>Upcoming Appointments</h2>
-                <ul>
-                    {upcomingAppointments.map(appointment => (
-                        <li key={appointment.id}>
-                            {appointment.service} - {new Date(appointment.date).toLocaleString()}
-                        </li>
+                <div className="dashboard-section">
+                    <h2>Upcoming Appointments</h2>
+                    <ul>
+                        {upcomingAppointments.map(appointment => (
+                            <li key={appointment.id}>
+                                {appointment.service} - {new Date(appointment.date).toLocaleString()}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <div className="dashboard-section">
+                    <h2>Appointment History</h2>
+                    <ul>
+                        {appointmentHistory.map(history => (
+                            <li key={history.id}>
+                                {history.service} - {new Date(history.date).toLocaleString()} ({history.status})
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <div className="dashboard-section">
+                    <h2>Notifications</h2>
+                    {notifications.map((note, index) => (
+                        <p key={index}>{note}</p>
                     ))}
-                </ul>
-            </div>
+                </div>
 
-            <div className="dashboard-section">
-                <h2>Appointment History</h2>
-                <ul>
-                    {appointmentHistory.map(history => (
-                        <li key={history.id}>
-                            {history.service} - {new Date(history.date).toLocaleString()} ({history.status})
-                        </li>
-                    ))}
-                </ul>
-            </div>
-
-            <div className="dashboard-section">
-                <h2>Notifications</h2>
-                {notifications.map((note, index) => (
-                    <p key={index}>{note}</p>
-                ))}
-            </div>
-
-            <div className="dashboard-section actions">
-                <button onClick={handleBookService}>Book New Service</button>
-                <button onClick={handleLogout}>Logout</button>
+                <div className="dashboard-section actions">
+                    <button onClick={handleBookService}>Book New Service</button>
+                    <button onClick={handleLogout}>Logout</button>
+                </div>
             </div>
         </div>
     );
