@@ -1,90 +1,65 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../static/css/UserProfileEdit.css';
 
-function UserProfileEdit({ userId }) {
-    const [userProfile, setUserProfile] = useState({
-        username: '',
-        profile: '',
-
-    });
-
-    useEffect(() => {
-        // Fetch the current user profile
-        const fetchUserProfile = async () => {
-            const response = await fetch(`/users/info?uid=${userId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            const data = await response.json();
-            if (data.error) {
-                console.error(data.error);
-            } else {
-                setUserProfile({
-                    username: data.username,
-                    profile: data.profile,
-
-                });
-            }
-        };
-
-        fetchUserProfile();
-    }, [userId]);
+function UserProfileEdit({ user, onSaveProfile }) {
+    const [editUser, setEditUser] = useState({ ...user });
 
     const handleChange = (e) => {
-        setUserProfile({ ...userProfile, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setEditUser({ ...editUser, [name]: value });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        // Update user profile
-        const response = await fetch('/users/edit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                uid: userId,
-                ...userProfile,
-            }),
-        });
-        const data = await response.json();
-        if (data.error) {
-            console.error(data.error);
-        } else {
-            console.log('Profile updated successfully');
-
-        }
+        onSaveProfile(editUser);
     };
 
     return (
-        <div className="user-profile-edit-container">
-            <form onSubmit={handleSubmit} className="user-profile-edit-form">
-                <h2>Edit Profile</h2>
-                <div className="input-group">
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        id="username"
-                        name="username"
-                        type="text"
-                        value={userProfile.username}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="input-group">
-                    <label htmlFor="profile">Profile:</label>
-                    <textarea
-                        id="profile"
-                        name="profile"
-                        value={userProfile.profile}
-                        onChange={handleChange}
-                    />
-                </div>
-                <button type="submit">Update Profile</button>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit} className="user-profile-edit-form">
+            <label htmlFor="username">Username:</label>
+            <input
+                id="username"
+                name="username"
+                type="text"
+                value={editUser.username}
+                onChange={handleChange}
+            />
+            <label htmlFor="email">Email:</label>
+            <input
+                id="email"
+                name="email"
+                type="email"
+                value={editUser.email}
+                onChange={handleChange}
+            />
+            <label htmlFor="contact">Contact:</label>
+            <input
+                id="contact"
+                name="contact"
+                type="text"
+                value={editUser.contact}
+                onChange={handleChange}
+            />
+            <label htmlFor="address">Address:</label>
+            <input
+                id="address"
+                name="address"
+                type="text"
+                value={editUser.address}
+                onChange={handleChange}
+            />
+            <label htmlFor="avatar">Profile Picture:</label>
+            <input
+                id="avatar"
+                name="avatar"
+                type="file"
+                onChange={(e) => {
+                    const avatar = e.target.files[0];
+                    setEditUser((prevState) => ({ ...prevState, avatar }));
+                }}
+            />
+            <button type="submit">Save Changes</button>
+        </form>
     );
 }
 

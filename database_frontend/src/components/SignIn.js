@@ -9,14 +9,11 @@ function SignIn() {
     const history = useHistory();
     const location = useLocation();
 
-
     const [successMessage, setSuccessMessage] = useState('');
 
     useEffect(() => {
-
         if (location.state?.successMessage) {
             setSuccessMessage(location.state.successMessage);
-
             history.replace({ ...location, state: {} });
         }
     }, [location, history]);
@@ -25,25 +22,33 @@ function SignIn() {
         event.preventDefault();
         setErrorMessage('');
 
-        const response = await fetch('http://127.0.0.1:5000/users/signin', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password_hash: password }),
-        });
+        try {
+            const response = await fetch('http://127.0.0.1:5000/users/signin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password_hash: password }),
+            });
 
-        const data = await response.json();
-        if (data.error) {
-            setErrorMessage('Username or password is incorrect. Please try again.');
-        } else {
-            localStorage.setItem('user', JSON.stringify({ username, uid: data.uid }));
-            history.push('/dashboard');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            if (data.error) {
+                setErrorMessage('Username or password is incorrect. Please try again.');
+            } else {
+                localStorage.setItem('user', JSON.stringify({ username, uid: data.uid }));
+                history.push('/dashboard');
+            }
+        } catch (error) {
+            setErrorMessage('There was a problem with the sign-in process.');
         }
     };
 
     return (
         <div className="signin-container">
-            {successMessage && <div className="signin-success">{successMessage}</div>}
             {errorMessage && <div className="signin-error">{errorMessage}</div>}
+            {successMessage && <div className="signin-success">{successMessage}</div>}
             <form onSubmit={handleSignIn} className="signin-form">
                 <h2>Sign In</h2>
                 <div className="input-group">

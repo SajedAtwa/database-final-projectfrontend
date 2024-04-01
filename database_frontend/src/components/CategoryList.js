@@ -1,8 +1,9 @@
 import React from 'react';
 import '../static/css/CategoryList.css';
-import image from '../static/images/screen_replace.png';
+import image from '../static/images/screen.png';
 import image2 from '../static/images/battery.png';
 import image3 from '../static/images/water_damage.png';
+
 import { Link } from 'react-router-dom';
 
 function CategoryList() {
@@ -41,8 +42,8 @@ function CategoryList() {
     { name: 'Camera Repair', 
     icon: '/path-to-icons/camera-repair.svg',
     linkName: '/repairservice' 
-  }
-  ];
+  },
+    ];
 
   return (
     <div className="category-list">

@@ -7,7 +7,7 @@
 .search-section {
     background-color: #ffffff;
     text-align: center;
-    padding: 2rem 0;
+    padding: 3rem 0;
     width: 100%;
 }
 
@@ -30,14 +30,13 @@
 }
 
 .info-section {
-    background-color: #e3f2fd;
-    /* Very light sky blue for a subtle distinction */
-    padding: 20px 0;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    width: 100%;
 }
 
 .footer {
     background-color: #c3dceb;
-    /* Muted blue-grey to anchor the footer */
     color: #fff;
     text-align: center;
     padding: 20px 0;
