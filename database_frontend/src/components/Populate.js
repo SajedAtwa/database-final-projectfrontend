@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { populateDatabase } from '../db methods/dbAdmin'; 
+import { populateDatabase } from '../db methods/dbAdmin';
 
 const Populate = () => {
   const history = useHistory();
 
   useEffect(() => {
     const populate = async () => {
-      await populateDatabase(); 
-      history.push('/'); // Redirect to home page after completion
+      
+      const uid = sessionStorage.getItem('uid');
+      const password = sessionStorage.getItem('password'); 
+
+      await populateDatabase(uid, password);
+      history.push('/');
     };
     populate();
   }, [history]);
