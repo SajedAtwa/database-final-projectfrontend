@@ -7,19 +7,11 @@ const Drop = () => {
 
   useEffect(() => {
     const drop = async () => {
-      // Retrieve uid and password securely
       const uid = sessionStorage.getItem('uid'); 
       const password = sessionStorage.getItem('password'); 
 
-      // Ensure uid and password are present
-      if (!uid || !password) {
-        console.error('User UID or password is missing');
-        return; 
-      }
-
       await dropDatabase(uid, password);
 
-      // Redirect to home page after completion
       history.push('/');
     };
     drop();
