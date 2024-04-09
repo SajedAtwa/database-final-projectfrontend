@@ -37,7 +37,9 @@ function SignIn() {
             if (data.error) {
                 setErrorMessage('Username or password is incorrect. Please try again.');
             } else {
-                localStorage.setItem('user', JSON.stringify({ username, uid: data.uid }));
+                sessionStorage.clear();
+                sessionStorage.setItem('uid', data.uid);
+                sessionStorage.setItem('password', password);
                 history.push('/dashboard');
             }
         } catch (error) {

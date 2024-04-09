@@ -6,9 +6,11 @@ const Populate = () => {
   const history = useHistory();
 
   useEffect(() => {
+    //sessionStorage.clear();
     const populate = async () => {
       
-      const uid = sessionStorage.getItem('uid');
+      const uidString = sessionStorage.getItem('uid');
+      const uid = parseInt(uidString, 10);
       const password = sessionStorage.getItem('password'); 
 
       await populateDatabase(uid, password);

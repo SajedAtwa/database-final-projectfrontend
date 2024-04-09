@@ -23,7 +23,7 @@ function SignUp() {
             if (data.error) {
                 setError(data.error);
             } else {
-                // Redirect to sign-in with a state parameter that includes a success message
+                
                 history.push({
                     pathname: '/signin',
                     state: { successMessage: 'Sign up successful. Please sign in.' }

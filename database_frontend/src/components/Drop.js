@@ -7,7 +7,8 @@ const Drop = () => {
 
   useEffect(() => {
     const drop = async () => {
-      const uid = sessionStorage.getItem('uid'); 
+      const uidString = sessionStorage.getItem('uid');
+      const uid = parseInt(uidString, 10);
       const password = sessionStorage.getItem('password'); 
 
       await dropDatabase(uid, password);
