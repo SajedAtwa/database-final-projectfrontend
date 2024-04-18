@@ -1,0 +1,42 @@
+.clean_touch-home-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.clean_touch-search-section {
+    background-color: #ffffff;
+    text-align: center;
+    padding: 3rem 0;
+    width: 100%;
+}
+
+.clean_touch-search-section h1 {
+    color: #7070bf;
+    margin: 0;
+}
+
+.clean_touch-category-section {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.clean_touch-category-section h2 {
+    color: #3f3f7c;
+    margin: 0;
+    padding: 20px;
+    background-color: transparent;
+}
+
+.clean_touch-info-section {
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    width: 100%;
+}
+
+.clean_touch-footer {
+    background-color: #c3dceb;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}

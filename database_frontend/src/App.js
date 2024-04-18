@@ -7,6 +7,14 @@ import UserDashboard from './components/UserDashboard';
 import './App.css';
 import RepairService from './components/RepairService';
 
+
+/*Clean Touch imports */
+import CleanTouchHeader from './components/clean_touch/HomePage';
+import IndividualCompanyPage from './components/clean_touch/CompanyTemplate';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import 'bootstrap/dist/js/bootstrap.min.js'
+
+
 function App() {
   return (
     <Router>
@@ -17,6 +25,9 @@ function App() {
         <Route path="/dashboard" component={UserDashboard} />
         <Route path='/repairservice' component={RepairService}/>
 
+        {/*Clean Touch*/}
+        <Route exact path="/clean_touch" component={CleanTouchHeader} />
+        <Route path='/clean_touch/company/:companyName' component={IndividualCompanyPage}/>
 
       </Switch>
     </Router>

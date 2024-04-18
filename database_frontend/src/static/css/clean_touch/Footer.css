@@ -1,0 +1,10 @@
+/* Footer.css */
+.sticky-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #9f86d0;
+    text-align: center;
+    padding: 0.1rem 0;
+}
