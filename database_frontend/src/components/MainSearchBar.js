@@ -44,7 +44,17 @@ function MainSearchBar({ onResults }) {
             <h1>Book Appointments with Nearby Repair Shops</h1>
             {error && <p className="error">{error}</p>}
             <div className="main-search-bar">
-                <input type="text" placeholder="Enter Your Device/Issue" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+            <select value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}>
+                <option value="">Select an option</option>
+                <option value="Screen Replacement">Screen Replacement</option>
+                <option value="Battery Replacement">Battery Replacement</option>
+                <option value="Water Damage Repair ">Water Damage Repai</option>
+                <option value="Keyboard Repair">Keyboard Repair</option>
+                <option value="Tablet Repair ">Tablet Repair</option>
+                <option value="Laptop Repair ">Laptop Repair</option>
+                <option value="Charging Port Repair ">Charging Port Repair</option>
+                <option value="Camera Repair ">Camera Repair</option>
+            </select>
                 <input type="text" placeholder="Enter Your ZipCode" value={location} onChange={(e) => setLocation(e.target.value)} />
                 <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                 <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
