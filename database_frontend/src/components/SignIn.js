@@ -12,13 +12,11 @@ function SignIn() {
     const [successMessage, setSuccessMessage] = useState('');
 
     useEffect(() => {
-        // Redirect if user is already logged in
-        const storedUser = sessionStorage.getItem('user');
-        if (storedUser && JSON.parse(storedUser).username) {
-            console.log('User already logged in, redirecting to dashboard...');
-            history.push('/dashboard');
+        if (location.state?.successMessage) {
+            setSuccessMessage(location.state.successMessage);
+            history.replace({ ...location, state: {} });
         }
-    }, [history]);
+    }, [location, history]);
 
     const handleSignIn = async (event) => {
         event.preventDefault();
@@ -49,7 +47,7 @@ function SignIn() {
                 console.log('Session storage set with uid and password'); // Log after setting session storage
 
                 console.log('Redirecting to dashboard...'); // Log right before redirecting
-                history.push('/dashboard');
+                //history.push('/dashboard');
             }
         } catch (error) {
             console.error('Sign in failed:', error);
