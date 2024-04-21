@@ -12,11 +12,13 @@ function SignIn() {
     const [successMessage, setSuccessMessage] = useState('');
 
     useEffect(() => {
-        if (location.state?.successMessage) {
-            setSuccessMessage(location.state.successMessage);
-            history.replace({ ...location, state: {} });
+        // Redirect if user is already logged in
+        const storedUser = sessionStorage.getItem('user');
+        if (storedUser && JSON.parse(storedUser).username) {
+            console.log('User already logged in, redirecting to dashboard...');
+            history.push('/dashboard');
         }
-    }, [location, history]);
+    }, [history]);
 
     const handleSignIn = async (event) => {
         event.preventDefault();
@@ -26,7 +28,7 @@ function SignIn() {
             const response = await fetch('http://127.0.0.1:5000/users/signin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password: password }),
+                body: JSON.stringify({ username, password}),
             });
 
             if (!response.ok) {
@@ -37,12 +39,20 @@ function SignIn() {
             if (data.error) {
                 setErrorMessage('Username or password is incorrect. Please try again.');
             } else {
-                sessionStorage.clear();
+                console.log('Sign in successful. User ID:', data.uid); // Log on successful sign-in
+
+                //sessionStorage.clear();
+                //console.log('Session storage cleared'); // Log after clearing session storage
+
                 sessionStorage.setItem('uid', data.uid);
                 sessionStorage.setItem('password', password);
+                console.log('Session storage set with uid and password'); // Log after setting session storage
+
+                console.log('Redirecting to dashboard...'); // Log right before redirecting
                 history.push('/dashboard');
             }
         } catch (error) {
+            console.error('Sign in failed:', error);
             setErrorMessage('There was a problem with the sign-in process.');
         }
     };

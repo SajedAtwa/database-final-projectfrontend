@@ -16,10 +16,10 @@ function UserDashboard() {
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
-        if (!user.username) {
+      /*  if (!user.username) {
             history.push('/signin');
             return;
-        }
+        } */
 
         // mock data
         setUpcomingAppointments([
