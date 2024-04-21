@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import '../static/css/SignIn.css';
+import * as User from "../Users.js";
 
 function SignIn() {
     const [username, setUsername] = useState('');
@@ -37,9 +38,9 @@ function SignIn() {
             if (data.error) {
                 setErrorMessage('Username or password is incorrect. Please try again.');
             } else {
-                sessionStorage.clear();
-                sessionStorage.setItem('uid', data.uid);
-                sessionStorage.setItem('password', password);
+                User.clearUser();
+		User.setUser("uid", data.uid);
+		User.setUser("password", password);
                 history.push('/dashboard');
             }
         } catch (error) {
