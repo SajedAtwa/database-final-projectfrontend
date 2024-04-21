@@ -13,7 +13,7 @@ const Drop = () => {
 
       await dropDatabase(uid, password);
 
-      history.push('/');
+      history.push('/dashboard');
     };
     drop();
   }, [history]);

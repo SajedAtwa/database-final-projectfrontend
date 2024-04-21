@@ -14,7 +14,7 @@ const Populate = () => {
       const password = sessionStorage.getItem('password'); 
 
       await populateDatabase(uid, password);
-      history.push('/');
+      history.push('/dashboard');
     };
     populate();
   }, [history]);
