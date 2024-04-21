@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserProfile from './UserProfile';
 import '../static/css/UserDashboard.css';
+import * as User from "../Users.js";
 
 function UserDashboard() {
     const history = useHistory();
@@ -16,7 +17,8 @@ function UserDashboard() {
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
-        if (!user.username) {
+        if (!User.getUser("uid")) {
+        	console.log(user)
             history.push('/signin');
             return;
         }
@@ -34,7 +36,7 @@ function UserDashboard() {
     }, [user, history]);
 
     const handleLogout = () => {
-        localStorage.removeItem('user');
+        User.clearUser();
         setUser({});
         history.push('/');
     };
