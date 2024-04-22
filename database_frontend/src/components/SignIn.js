@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import '../static/css/SignIn.css';
+import * as User from "../Users.js";
 
 function SignIn() {
     const [username, setUsername] = useState('');
@@ -26,7 +27,7 @@ function SignIn() {
             const response = await fetch('http://127.0.0.1:5000/users/signin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password_hash: password }),
+                body: JSON.stringify({ username, password: password }),
             });
 
             if (!response.ok) {
@@ -37,7 +38,9 @@ function SignIn() {
             if (data.error) {
                 setErrorMessage('Username or password is incorrect. Please try again.');
             } else {
-                localStorage.setItem('user', JSON.stringify({ username, uid: data.uid }));
+                User.clearUser();
+		User.setUser("uid", data.uid);
+		User.setUser("password", password);
                 history.push('/dashboard');
             }
         } catch (error) {

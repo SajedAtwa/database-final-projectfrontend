@@ -12,20 +12,18 @@ function SignUp() {
         event.preventDefault();
         setError('');
 
-        const hashedPassword = password;
-
         try {
             const response = await fetch('http://127.0.0.1:5000/users/create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password_hash: hashedPassword }),
+                body: JSON.stringify({ username, password: password }),
             });
 
             const data = await response.json();
             if (data.error) {
                 setError(data.error);
             } else {
-                // Redirect to sign-in with a state parameter that includes a success message
+                
                 history.push({
                     pathname: '/signin',
                     state: { successMessage: 'Sign up successful. Please sign in.' }
