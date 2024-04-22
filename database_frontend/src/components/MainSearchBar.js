@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../static/css/MainSearchBar.css';
 import { dbSearch } from '../db methods/dbSearch';
+import { useHistory } from 'react-router-dom';
 
 function MainSearchBar({ onResults }) {
+    const history = useHistory();
     const [searchTerm, setSearchTerm] = useState('');
     const [location, setLocation] = useState('');
     const [startDate, setStartDate] = useState('');
@@ -26,9 +28,14 @@ function MainSearchBar({ onResults }) {
         console.log('Formatted End DateTime:', formattedEndDateTime); // This logs the formatted end date/time
 
         try {
+
+            if (searchTerm || location || startDate || startTime || endDate || endTime || services) {
+                history.push('/availability-list');
+            }
             const data = await dbSearch(services, location, formattedStartDateTime, formattedEndDateTime);
             if (!data.error) {
                 onResults(data);
+                history.push('/availability-list');
             } else {
                 console.log('Error from search:', data.error);
                 setError(data.error);
@@ -38,6 +45,12 @@ function MainSearchBar({ onResults }) {
             setError('Search request failed. Please try again later.');
         }
     };
+
+    // useEffect(() => {
+    //     // Redirect to AvailabilityList when component mounts
+    //     history.push('/availability-list'); // Adjust the route path as per your setup
+    // }, [history]); // Include history in the dependency array
+
 
     return (
         <div className="search-container">
