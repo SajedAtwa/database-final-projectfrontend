@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../static/css/MainSearchBar.css';
 import { dbSearch } from '../db methods/dbSearch';
-import { useHistory } from 'react-router-dom';
 
-function MainSearchBar({ onResults }) {
+
+function MainSearchBar() {
     const history = useHistory();
     const [searchTerm, setSearchTerm] = useState('');
     const [location, setLocation] = useState('');
@@ -12,44 +13,35 @@ function MainSearchBar({ onResults }) {
     const [endDate, setEndDate] = useState('');
     const [endTime, setEndTime] = useState('');
     const [error, setError] = useState('');
-    const [services, setServices] = useState('');
+
 
     const handleSearch = async () => {
-        console.log('handleSearch called');
         if (!startDate || !startTime || !endDate || !endTime) {
             setError('Please fill in all date and time fields.');
             return;
         }
+   
+       
+    const formattedStartDateTime = `${startDate} ${startTime}:00.000`;
+    const formattedEndDateTime = `${endDate} ${endTime}:00.000`;
 
-        const formattedStartDateTime = `${startDate} ${startTime}:00.000`;
-        const formattedEndDateTime = `${endDate} ${endTime}:00.000`;
 
-        console.log('Formatted Start DateTime:', formattedStartDateTime); // This logs the formatted start date/time
-        console.log('Formatted End DateTime:', formattedEndDateTime); // This logs the formatted end date/time
-
+   
         try {
-
-            if (searchTerm || location || startDate || startTime || endDate || endTime || services) {
-                history.push('/availability-list');
-            }
-            const data = await dbSearch(services, location, formattedStartDateTime, formattedEndDateTime);
-            if (!data.error) {
-                onResults(data);
-                history.push('/availability-list');
+            const data = await dbSearch(searchTerm, location, formattedStartDateTime, formattedEndDateTime);
+            if (data && !data.error) {
+                history.push({
+                    pathname: '/availability-list',
+                    state: { businesses: data.businesses, distances: data.distances }
+                });
             } else {
-                console.log('Error from search:', data.error);
-                setError(data.error);
+                setError(data.error || 'Failed to fetch results.');
             }
         } catch (err) {
-            console.log('Search request failed with error:', err);
             setError('Search request failed. Please try again later.');
         }
     };
-
-    // useEffect(() => {
-    //     // Redirect to AvailabilityList when component mounts
-    //     history.push('/availability-list'); // Adjust the route path as per your setup
-    // }, [history]); // Include history in the dependency array
+   
 
 
     return (
@@ -68,5 +60,6 @@ function MainSearchBar({ onResults }) {
         </div>
     );
 }
+
 
 export default MainSearchBar;

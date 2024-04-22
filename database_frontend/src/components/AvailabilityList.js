@@ -1,42 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 import '../static/css/AvailabilityList.css';
 
+
 function AvailabilityList() {
-    const [availabilities, setAvailabilities] = useState([]);
+    const location = useLocation();
+    const { businesses, distances } = location.state || { businesses: [], distances: [] };
 
-    useEffect(() => {
-        const fetchAvailabilities = async () => {
-            const response = await fetch('/availabilities/search', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-
-            });
-            const data = await response.json();
-            if (!data.error) {
-                setAvailabilities(data.availabilities);
-            } else {
-                console.error(data.error);
-            }
-        };
-
-        fetchAvailabilities();
-    }, []);
 
     return (
         <div className="availability-list-container">
             <h2>Available Time Slots</h2>
             <ul>
-                {availabilities.map((availability, index) => (
+                {businesses.map((business, index) => (
                     <li key={index}>
-                        Start: {availability.startDate} at {availability.startTime}, End: {availability.endDate} at {availability.endTime}
-
+                        Business ID: {business}, Distance: {distances[index]} miles
                     </li>
                 ))}
             </ul>
         </div>
     );
 }
+
 
 export default AvailabilityList;
