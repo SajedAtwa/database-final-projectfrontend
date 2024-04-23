@@ -38,7 +38,7 @@ function UserDashboard() {
     const handleLogout = () => {
         User.clearUser();
         setUser({});
-        history.push('/repair_wave');
+        history.push('/');
     };
 
     const handleBookService = () => {
