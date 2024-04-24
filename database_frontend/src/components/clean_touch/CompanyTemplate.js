@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import data from "../../static/clean_touch_companyData.json";  // Assuming data is structured as shown
-import Header from './Header';
-import Footer from './Footer';
+//import Header from '../Header';
+//import Footer from '../Footer';
 
 function EachCompanyPage({ companyInfo }) {
     return (
         <div>
-            <Header />
+            {/*<Header />*/}
             <div className="company-card">
                 <h2>{companyInfo["Company Name"]}</h2>
                 <img src={companyInfo["Image"]} alt={companyInfo["Company Name"]} />
@@ -17,7 +17,7 @@ function EachCompanyPage({ companyInfo }) {
                 <p className="rating">Rating: {companyInfo["Offer Rating"]} / 5</p>
                 <a href={companyInfo["Offer Link"]} target="_blank" rel="noopener noreferrer" className="view-offer-button">View Offer</a>
             </div>
-            <Footer />
+            {/*<Footer />*/}
         </div>
     );
 }
@@ -30,11 +30,12 @@ function IndividualCompanyPage() {
 
     console.log("companyName");
     useEffect(() => {
-        const selectedCompany = data.find(item => item["Company Name"] === companyName);
+        const selectedCompany = data.find(item => item["Company Name"].toLowerCase() === companyName.replace(/%20/g, ' ').toLowerCase());
         setCompany(selectedCompany);
         setLoading(false);
     }, [companyName]);  // Depend on companyName to re-run this effect
 
+    
     if (loading) {
         return <div>Loading...</div>;
     }
