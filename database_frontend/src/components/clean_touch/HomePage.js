@@ -7,14 +7,14 @@ import CleanTouchFooter from './Footer';
 import '../../static/css/clean_touch/HomePage.css';
 
 function CleanTouchHomePage() {
- 
+    
     return (
         <div className="clean_touch-home-page">
+
             <CleanTouchHeader />
+            <MainPicture className="clean_touch-main-picture"/>
 
-            <MainPicture />
-
-
+            
             <div className="clean_touch-category-section">
                 <h2>Popular dealers near you</h2>
                 <CleanTouchCategoryList />

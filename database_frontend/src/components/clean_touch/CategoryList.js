@@ -53,7 +53,7 @@ function CleanTouchCategoryList() {
   ];
   // Iterate through the categories array
   categories.forEach(category => {
-    category.linkName = "company/" + category.name;
+    category.linkName = "/clean_touch/company/" + category.name;
   });
 
 
