@@ -1,12 +1,13 @@
+// MainSearchBar.js
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../static/css/MainSearchBar.css';
 import { dbSearch } from '../db methods/dbSearch';
 
-
 function MainSearchBar() {
     const history = useHistory();
-    const [searchTerm, setSearchTerm] = useState('');
+    const [device, setDevice] = useState('');
+    const [issue, setIssue] = useState(''); // Renaming searchTerm to issue for clarity
     const [location, setLocation] = useState('');
     const [startDate, setStartDate] = useState('');
     const [startTime, setStartTime] = useState('');
@@ -14,21 +15,17 @@ function MainSearchBar() {
     const [endTime, setEndTime] = useState('');
     const [error, setError] = useState('');
 
-
     const handleSearch = async () => {
         if (!startDate || !startTime || !endDate || !endTime) {
             setError('Please fill in all date and time fields.');
             return;
         }
-   
-       
-    const formattedStartDateTime = `${startDate} ${startTime}:00.000`;
-    const formattedEndDateTime = `${endDate} ${endTime}:00.000`;
 
+        const formattedStartDateTime = `${startDate} ${startTime}:00.000`;
+        const formattedEndDateTime = `${endDate} ${endTime}:00.000`;
 
-   
         try {
-            const data = await dbSearch(searchTerm, location, formattedStartDateTime, formattedEndDateTime);
+            const data = await dbSearch({ device, device_repair: issue }, location, formattedStartDateTime, formattedEndDateTime);
             if (data && !data.error) {
                 history.push({
                     pathname: '/availability-list',
@@ -41,15 +38,14 @@ function MainSearchBar() {
             setError('Search request failed. Please try again later.');
         }
     };
-   
-
 
     return (
         <div className="search-container">
             <h1>Book Appointments with Nearby Repair Shops</h1>
             {error && <p className="error">{error}</p>}
             <div className="main-search-bar">
-                <input type="text" placeholder="Enter Your Device/Issue" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                <input type="text" placeholder="Enter Your Device (e.g., iPhone)" value={device} onChange={(e) => setDevice(e.target.value)} />
+                <input type="text" placeholder="Enter Issue (e.g., Screen Replacement)" value={issue} onChange={(e) => setIssue(e.target.value)} />
                 <input type="text" placeholder="Enter Your ZipCode" value={location} onChange={(e) => setLocation(e.target.value)} />
                 <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                 <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
@@ -60,6 +56,5 @@ function MainSearchBar() {
         </div>
     );
 }
-
 
 export default MainSearchBar;
