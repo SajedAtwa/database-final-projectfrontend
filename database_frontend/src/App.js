@@ -7,6 +7,7 @@ import SignUp from './components/SignUp';
 import UserDashboard from './components/UserDashboard';
 import Populate from './components/Populate'; 
 import Drop from './components/Drop'; 
+import AvailabilityList from './components/AvailabilityList'; 
 import './App.css';
 import RepairService from './components/RepairService';
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/dashboard" component={UserDashboard} />
         <Route path="/populate" component={Populate} /> 
         <Route path="/drop" component={Drop} /> 
+        <Route path="/availability-list" component={AvailabilityList} />
         
         <Route path='/repairservice' component={RepairService}/>
 

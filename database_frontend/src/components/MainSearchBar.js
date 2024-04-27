@@ -14,6 +14,7 @@ function MainSearchBar() {
     const [endDate, setEndDate] = useState('');
     const [endTime, setEndTime] = useState('');
     const [error, setError] = useState('');
+    const [searchResults, setSearchResults] = useState(null);
 
     const handleSearch = async () => {
         if (!startDate || !startTime || !endDate || !endTime) {
@@ -27,9 +28,10 @@ function MainSearchBar() {
         try {
             const data = await dbSearch({ device, device_repair: issue }, location, formattedStartDateTime, formattedEndDateTime);
             if (data && !data.error) {
+                setSearchResults(data); // Set the search results
                 history.push({
                     pathname: '/availability-list',
-                    state: { businesses: data.businesses, distances: data.distances }
+                    state: { searchResults: data } // Pass the results to the next page
                 });
             } else {
                 setError(data.error || 'Failed to fetch results.');

@@ -1,28 +1,24 @@
+/* AvailabilityList.css */
 .availability-list-container {
     padding: 20px;
-    max-width: 600px;
-    margin: auto;
+    text-align: center;
 }
 
 .availability-list-container h2 {
-    text-align: center;
-    color: #333;
+    margin-bottom: 20px;
 }
 
-ul {
+.availability-list-container ul {
     list-style-type: none;
     padding: 0;
 }
 
-li {
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
+.availability-list-container li {
+    background: #f3f3f3;
     margin-bottom: 10px;
-    font-size: 16px;
-}
-
-li:hover {
-    background-color: #e9e9e9;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
