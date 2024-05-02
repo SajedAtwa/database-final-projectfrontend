@@ -1,24 +1,80 @@
-/* AvailabilityList.css */
 .availability-list-container {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
+  
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .availability-list-container h1 {
     text-align: center;
-}
-
-.availability-list-container h2 {
+    color: #333;
+    font-size: 24px;
     margin-bottom: 20px;
-}
-
-.availability-list-container ul {
-    list-style-type: none;
+  }
+  
+  .availability-list {
+    list-style: none;
     padding: 0;
-}
-
-.availability-list-container li {
-    background: #f3f3f3;
+  }
+  
+  .availability-list li {
+    background-color: #ffffff;
+    padding: 15px;
     margin-bottom: 10px;
-    padding: 10px;
     border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+  }
+  
+  .availability-list li:hover {
+    transform: translateY(-3px);
+  }
+  
+  .availability-list h2 {
+    margin-top: 0;
+    color: #007bff;
+  }
+  
+  .availability-list p {
+    color: #666;
+    line-height: 1.5;
+  }
+  
+  .availability-list button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    float: right;
+  }
+  
+  .availability-list button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 767px) {
+    .availability-list-container {
+      padding: 10px;
+    }
+  
+    .availability-list h2 {
+      font-size: 18px;
+    }
+  
+    .availability-list p {
+      font-size: 14px;
+    }
+  
+    .availability-list button {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+  }
+  
