@@ -1,80 +1,42 @@
-.availability-list-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .availability-list-container h1 {
-    text-align: center;
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .availability-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .availability-list li {
-    background-color: #ffffff;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s;
-  }
-  
-  .availability-list li:hover {
-    transform: translateY(-3px);
-  }
-  
-  .availability-list h2 {
-    margin-top: 0;
-    color: #007bff;
-  }
-  
-  .availability-list p {
-    color: #666;
-    line-height: 1.5;
-  }
-  
-  .availability-list button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-    float: right;
-  }
-  
-  .availability-list button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 767px) {
-    .availability-list-container {
-      padding: 10px;
-    }
-  
-    .availability-list h2 {
-      font-size: 18px;
-    }
-  
-    .availability-list p {
-      font-size: 14px;
-    }
-  
-    .availability-list button {
-      padding: 8px 16px;
-      font-size: 14px;
-    }
-  }
-  
+/* AvailabilityList.css */
+
+/* Styles for the container */
+.AvailabilityList {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+/* Styles for the heading */
+.AvailabilityList h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Styles for the list */
+.AvailabilityList ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Styles for the list items */
+.AvailabilityList li {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background-color: #fff;
+}
+
+/* Styles for the list item content */
+.AvailabilityList li span {
+  font-weight: bold;
+}
+
+/* Styles for the message when no services are found */
+.AvailabilityList .no-services-message {
+  font-style: italic;
+  color: #888;
+}
