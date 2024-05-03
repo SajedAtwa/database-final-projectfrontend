@@ -13,6 +13,7 @@ import RepairService from './components/RepairService';
 
 import CleanTouchHeader from './components/clean_touch/HomePage'; // Home page for Clean Touch
 import IndividualCompanyPage from './components/clean_touch/CompanyTemplate';
+import MainSearch from './components/clean_touch/MainSearch.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js'
 
@@ -33,6 +34,8 @@ function App() {
 
         {/*Clean Touch*/}
         <Route exact path="/clean_touch" component={CleanTouchHeader} /> // Clean Touch home page
+        <Route path='/clean_touch/search' component={MainSearch}/>
+
         <Route path='/clean_touch/company/:companyName' component={IndividualCompanyPage}/>
 
       </Switch>
