@@ -1,6 +1,4 @@
-// UserDashboard.js
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserProfile from './UserProfile';
 import '../static/css/UserDashboard.css';
@@ -17,23 +15,39 @@ function UserDashboard() {
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
+        // Redirect if not signed in
         if (!User.getUser("uid")) {
-        	console.log(user)
+            console.log(user)
             history.push('/signin');
             return;
         }
 
-        // mock data
-        setUpcomingAppointments([
-            { id: 1, service: "Service A", date: "2024-04-05T09:00:00Z" },
-            { id: 2, service: "Service B", date: "2024-04-10T14:00:00Z" },
-        ]);
-        setAppointmentHistory([
-            { id: 3, service: "Service C", date: "2024-03-01T11:00:00Z", status: "Completed" },
-            { id: 4, service: "Service D", date: "2024-02-20T16:00:00Z", status: "Cancelled" },
-        ]);
-        setNotifications(["Your appointment with Service A is tomorrow!"]);
+        // Fetch data from the server
+        fetchUserAppointments();
+
     }, [user, history]);
+
+    const fetchUserAppointments = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/api/appointments/upcoming', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setUpcomingAppointments(data.upcoming);
+                setAppointmentHistory(data.history);
+                setNotifications(data.notifications);
+            } else {
+                throw new Error('Failed to fetch appointments');
+            }
+        } catch (error) {
+            console.error('Error fetching appointments:', error);
+        }
+    };
 
     const handleLogout = () => {
         User.clearUser();

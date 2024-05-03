@@ -43,11 +43,26 @@ function MainSearchBar() {
             }
             const data = await dbSearch(services, location, formattedStartDateTime, formattedEndDateTime);
             console.log('Data received from search:', data);
+
+            console.log('Navigating to AvailabilityList with:', {
+                searchResults: data,
+                startDate: startDate,
+                startTime: startTime,
+                endDate: endDate,
+                endTime: endTime
+            });
+
             if (data && !data.error) {
                 setSearchResults(data); // Set the search results
                 history.push({
                     pathname: '/availability-list',
-                    state: { searchResults: data } // Pass the results to the next page
+                    state: {
+                        searchResults: data, // Make sure 'data' contains 'businesses' and 'distances'
+                        startDate: startDate,
+                        startTime: startTime,
+                        endDate: endDate,
+                        endTime: endTime
+                    }
                 });
             } else {
                 setError(data.error || 'Failed to fetch results.');

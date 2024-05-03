@@ -1,42 +1,64 @@
-/* AvailabilityList.css */
-
-/* Styles for the container */
 .AvailabilityList {
-  margin: 20px;
+  margin: 20px auto;
   padding: 20px;
+  width: 80%;
+  max-width: 1000px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* Styles for the heading */
 .AvailabilityList h1 {
   font-size: 24px;
   margin-bottom: 20px;
+  color: #333;
+  text-align: center;
 }
 
-/* Styles for the list */
 .AvailabilityList ul {
   list-style-type: none;
+  margin: 0;
   padding: 0;
 }
 
-/* Styles for the list items */
 .AvailabilityList li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 12px 15px;
   border: 1px solid #ddd;
   border-radius: 3px;
   background-color: #fff;
+  transition: background-color 0.3s;
 }
 
-/* Styles for the list item content */
+.AvailabilityList li:hover {
+  background-color: #f0f0f0;
+}
+
+.AvailabilityList .booking-button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.AvailabilityList .booking-button:hover {
+  background-color: #0056b3;
+}
+
 .AvailabilityList li span {
   font-weight: bold;
 }
 
-/* Styles for the message when no services are found */
 .AvailabilityList .no-services-message {
+  text-align: center;
   font-style: italic;
   color: #888;
+  padding: 20px;
 }

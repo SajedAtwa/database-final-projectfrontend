@@ -28,7 +28,7 @@ function App() {
         <Route path="/populate" component={Populate} /> 
         <Route path="/drop" component={Drop} /> 
         <Route path="/availability-list" component={AvailabilityList} />
-        
+
         <Route path='/repairservice' component={RepairService}/>
 
         {/*Clean Touch*/}
