@@ -11,6 +11,7 @@ function MainSearch() {
     const [endTime, setEndTime] = useState('17:00');
     const [error, setError] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [searchPerformed, setSearchPerformed] = useState(false);  // State to track if a search has been performed
 
     const handleSearch = async () => {
         if (!startDate || !startTime || !endDate || !endTime) {
@@ -23,12 +24,13 @@ function MainSearch() {
 
         try {
             const data = await dbSearch({ device, device_repair: issue }, location, formattedStartDateTime, formattedEndDateTime);
-            if (data && !data.error) {
-                setSearchResults(data);
+            setSearchPerformed(true);  // Set to true when a search is performed
+            if (data && data.businesses) {
+                setSearchResults(data.businesses.map((id, index) => ({ id, distance: data.distances[index] })));
                 setError(''); // Reset error if search is successful
             } else {
                 setSearchResults([]);
-                setError(data.error || 'Failed to fetch results.');
+                setError('No data found or invalid data structure.');
             }
         } catch (err) {
             setSearchResults([]);
@@ -51,14 +53,13 @@ function MainSearch() {
                 <button onClick={handleSearch}>Search</button>
             </div>
             <div className="search-results">
-                {searchResults.length > 0 && (
+                {searchPerformed && searchResults.length > 0 ? (
                     <ul>
                         {searchResults.map(result => (
-                            <li key={result.id}>{/* Display each result item */}</li>
+                            <li key={result.id}>Business ID: {result.id}, Distance: {result.distance.toFixed(2)} meters</li>
                         ))}
                     </ul>
-                )}
-                {searchResults.length === 0 && <p>No results found.</p>}
+                ) : searchPerformed && searchResults.length === 0 ? <p>No results found.</p> : null}
             </div>
         </div>
     );
