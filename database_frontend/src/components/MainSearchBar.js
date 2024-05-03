@@ -14,27 +14,61 @@ function MainSearchBar() {
     const [endDate, setEndDate] = useState('');
     const [endTime, setEndTime] = useState('');
     const [error, setError] = useState('');
+    const [searchResults, setSearchResults] = useState('');
 
     const handleSearch = async () => {
         if (!startDate || !startTime || !endDate || !endTime) {
             setError('Please fill in all date and time fields.');
             return;
         }
-
+    
         const formattedStartDateTime = `${startDate} ${startTime}:00.000`;
         const formattedEndDateTime = `${endDate} ${endTime}:00.000`;
-
+    
+        // Validate that the start date is before the end date
+        if (new Date(formattedStartDateTime) >= new Date(formattedEndDateTime)) {
+            setError('Start date and time must be before end date and time.');
+            return;
+        }
+    
+        console.log('Formatted Start DateTime:', formattedStartDateTime);
+        console.log('Formatted End DateTime:', formattedEndDateTime);
         try {
-            const data = await dbSearch({ device, device_repair: issue }, location, formattedStartDateTime, formattedEndDateTime);
+            const services = {};
+            if (device) {
+                services.device = device;
+            }
+            if (issue) {
+                services.device_repair = issue;
+            }
+            const data = await dbSearch(services, location, formattedStartDateTime, formattedEndDateTime);
+            console.log('Data received from search:', data);
+
+            console.log('Navigating to AvailabilityList with:', {
+                searchResults: data,
+                startDate: startDate,
+                startTime: startTime,
+                endDate: endDate,
+                endTime: endTime
+            });
+
             if (data && !data.error) {
+                setSearchResults(data); // Set the search results
                 history.push({
                     pathname: '/availability-list',
-                    state: { businesses: data.businesses, distances: data.distances }
+                    state: {
+                        searchResults: data, // Make sure 'data' contains 'businesses' and 'distances'
+                        startDate: startDate,
+                        startTime: startTime,
+                        endDate: endDate,
+                        endTime: endTime
+                    }
                 });
             } else {
                 setError(data.error || 'Failed to fetch results.');
             }
         } catch (err) {
+            console.error('Error during search:', err);
             setError('Search request failed. Please try again later.');
         }
     };
