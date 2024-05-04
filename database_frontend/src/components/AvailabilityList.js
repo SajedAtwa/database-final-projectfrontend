@@ -57,7 +57,7 @@ function AvailabilityList() {
     };
 
     if (!searchResults.businesses || searchResults.businesses.length === 0) {
-        return <div className="AvailabilityList">No available services found. Please try again with different parameters.</div>;
+        return <div className="AvailabilityList">No available services found. Please try again for a different day or time.</div>;
     }
 
     return (
@@ -66,7 +66,7 @@ function AvailabilityList() {
             <ul>
                 {searchResults.businesses.map((business, index) => (
                     <li key={business} className="business-list-item">
-                        Business ID: {business}, Distance: {searchResults.distances[index]} km
+                        Business ID: {business}, Distance: {searchResults.distances[index].toFixed(2)} km
                         <button onClick={() => handleBookingClick(business)} className="booking-button">
                             Create Booking
                         </button>

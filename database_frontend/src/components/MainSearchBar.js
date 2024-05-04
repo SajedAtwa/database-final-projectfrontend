@@ -78,8 +78,22 @@ function MainSearchBar() {
             <h1>Book Appointments with Nearby Repair Shops</h1>
             {error && <p className="error">{error}</p>}
             <div className="main-search-bar">
-                <input type="text" placeholder="Enter Your Device (e.g., iPhone)" value={device} onChange={(e) => setDevice(e.target.value)} />
-                <input type="text" placeholder="Enter Issue (e.g., Screen Replacement)" value={issue} onChange={(e) => setIssue(e.target.value)} />
+                <select value={device} onChange={(e) => setDevice(e.target.value)}>
+                    <option value="" disabled selected>Select a Device</option>
+                    <option value="IPHONE">IPHONE</option>
+                    <option value="IPAD">IPAD</option>
+                    <option value="MACBOOK">MACBOOK</option>
+                    <option value="PIXEL">PIXEL</option>
+                    <option value="HTC">HTC</option>
+                    <option value="SAMSUNG">SAMSUNG</option>
+                    <option value="XIAOMI">XIAOMI</option>
+                </select>
+                <select value={issue} onChange={(e) => setIssue(e.target.value)}>
+                    <option value="" disabled selected>Select an Issue</option>
+                    <option value="SCREEN_REPAIR">Screen Repair</option>
+                    <option value="CAMERA_REPAIR">Camera Repair</option>
+                    <option value="BATTERY_REPLACEMENT">Battery Replacement</option>
+                </select>
                 <input type="text" placeholder="Enter Your ZipCode" value={location} onChange={(e) => setLocation(e.target.value)} />
                 <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                 <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
