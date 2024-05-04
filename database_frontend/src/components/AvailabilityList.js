@@ -7,12 +7,19 @@ import * as User from "../Users.js";
 function AvailabilityList() {
     const location = useLocation();
     console.log("Location state:", location.state);
-    
-    const { searchResults, startDate, startTime, endDate, endTime } = location.state || { searchResults: { businesses: [], distances: [] }, startDate: '', startTime: '', endDate: '', endTime: '' };
 
+    const { searchResults, service, startDate, startTime, endDate, endTime } = location.state || {
+        searchResults: { businesses: [], distances: [] },
+        service: { device: '', issue: '' },
+        startDate: '',
+        startTime: '',
+        endDate: '',
+        endTime: ''
+    };
+    console.log('Extracted service:', service);
     const handleBookingClick = async (business) => {
         const userId = User.getUser('uid');
-        const password = User.getUser('password')
+        const password = User.getUser('password');
         if (!userId) {
             alert('User ID is missing. Please log in.');
             return;
@@ -25,23 +32,23 @@ function AvailabilityList() {
             alert('Invalid date or time. Please check your inputs.');
             return;
         }
-        
+
         const bookingDetails = {
             uid: userId,
             password: password,
             business: business,
             start_datetime: formattedStartDateTime,
             end_datetime: formattedEndDateTime,
-            service: searchResults
+            service: service  
         };
 
         try {
+            console.log('Booking Details being sent:', bookingDetails);
             const result = await createBooking(bookingDetails);
             if (result.error) {
                 alert(`Booking Failed: ${result.error}`);
             } else {
                 alert('Booking successful!');
-               
             }
         } catch (error) {
             alert('Failed to create booking. Please try again.');

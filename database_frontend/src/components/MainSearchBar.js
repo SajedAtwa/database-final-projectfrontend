@@ -7,7 +7,7 @@ import { dbSearch } from '../db methods/dbSearch';
 function MainSearchBar() {
     const history = useHistory();
     const [device, setDevice] = useState('');
-    const [issue, setIssue] = useState(''); // Renaming searchTerm to issue for clarity
+    const [issue, setIssue] = useState(''); 
     const [location, setLocation] = useState('');
     const [startDate, setStartDate] = useState('');
     const [startTime, setStartTime] = useState('');
@@ -34,18 +34,17 @@ function MainSearchBar() {
         console.log('Formatted Start DateTime:', formattedStartDateTime);
         console.log('Formatted End DateTime:', formattedEndDateTime);
         try {
-            const services = {};
-            if (device) {
-                services.device = device;
-            }
-            if (issue) {
-                services.device_repair = issue;
-            }
+            const services = {
+                ...(device && { device: device }), 
+                ...(issue && { device_repair: issue }) 
+            };
+            console.log('Services being passed:', services);
             const data = await dbSearch(services, location, formattedStartDateTime, formattedEndDateTime);
             console.log('Data received from search:', data);
 
             console.log('Navigating to AvailabilityList with:', {
                 searchResults: data,
+                service: services,
                 startDate: startDate,
                 startTime: startTime,
                 endDate: endDate,
@@ -57,7 +56,8 @@ function MainSearchBar() {
                 history.push({
                     pathname: '/availability-list',
                     state: {
-                        searchResults: data, // Make sure 'data' contains 'businesses' and 'distances'
+                        searchResults: data, 
+                        service: services,
                         startDate: startDate,
                         startTime: startTime,
                         endDate: endDate,
