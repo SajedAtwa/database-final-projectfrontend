@@ -1,11 +1,12 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import '../static/css/AvailabilityList.css';
 import { createBooking } from '../db methods/dbBookingCreate';
 import * as User from "../Users.js";
 
 function AvailabilityList() {
     const location = useLocation();
+    const history = useHistory();
     console.log("Location state:", location.state);
 
     const { searchResults, service, startDate, startTime, endDate, endTime } = location.state || {
@@ -49,6 +50,7 @@ function AvailabilityList() {
                 alert(`Booking Failed: ${result.error}`);
             } else {
                 alert('Booking successful!');
+                history.push('/dashboard');
             }
         } catch (error) {
             alert('Failed to create booking. Please try again.');
