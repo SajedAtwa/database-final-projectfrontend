@@ -9,7 +9,7 @@
 .main-search-bar button {
     padding: 10px;
     border-radius: 4px;
-    border: 1px solid #ccc;
+    border: 1px solid #ccc; /* Retaining a subtle border, might adjust to darker if needed */
 }
 
 .main-search-bar input[type="text"] {
@@ -19,9 +19,14 @@
 
 .main-search-bar button {
     padding: 10px 20px;
-    background-color: #5C5470;
+    background-color: #34568B; /* Dark navy blue, matching the button color in other components */
     color: white;
     border: none;
     cursor: pointer;
     font-size: 1rem;
+    transition: background-color 0.3s; /* Smooth transition for hover effects */
+}
+
+.main-search-bar button:hover {
+    background-color: #1a53f0; /* Lighter navy blue for hover, matches other hover styles */
 }

@@ -6,15 +6,15 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f4e8ff;
-  color: #3d2c50;
+  background-color: #e8f0f8; /* Light blue background */
+  color: #172b4d; /* Navy blue text */
   font-family: 'Open Sans', sans-serif;
 }
 
 .main-container h1 {
   font-size: 32px;
   margin-bottom: 10px;
-  color: #5d3b8a;
+  color: #1a53f0; /* Bright navy blue */
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
 }
@@ -31,7 +31,7 @@
 
 .button-link {
   padding: 12px 24px;
-  background-color: #8866be;
+  background-color: #34568B; /* Dark navy blue */
   color: white;
   text-decoration: none;
   border-radius: 8px;
@@ -41,6 +41,6 @@
 }
 
 .button-link:hover {
-  background-color: #8e44ad;
+  background-color: #1a53f0; /* Slightly lighter navy blue on hover */
   transform: translateY(-2px);
 }
