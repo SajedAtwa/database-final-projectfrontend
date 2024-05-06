@@ -4,6 +4,7 @@ import UserProfile from './UserProfile';
 import { fetchBookings } from '../db methods/dbBookingList';
 import { deleteBooking } from '../db methods/dbBookingCancel';
 import { fetchBookingInfo } from '../db methods/dbBookingInfo';
+import { initializeBalance } from '../db methods/dbBalance'; // Import the new function
 import '../static/css/UserDashboard.css';
 import * as User from "../Users.js";
 
@@ -72,7 +73,6 @@ function UserDashboard() {
                 alert('Failed to delete booking');
             });
     };
-    
 
     const handleLogout = () => {
         User.clearUser();
@@ -83,6 +83,18 @@ function UserDashboard() {
     const handleBookService = () => {
         history.push('/book-service');
     };
+
+    const handleInitializeBalance = async () => {
+        const userId = User.getUser("uid");
+        const password = User.getUser("password");  // Ensure you are securely managing passwords
+        try {
+            const response = await initializeBalance(userId, password);
+            alert("Balance initialized successfully!");
+        } catch (error) {
+            alert(`Failed to initialize balance: ${error.message}`);
+        }
+    };
+    
 
     const onSaveProfile = (userData) => {
         setUser(userData);
@@ -124,6 +136,7 @@ function UserDashboard() {
                 <div className="dashboard-section actions">
                     <button onClick={handleBookService}>Book New Service</button>
                     <button onClick={handleLogout}>Logout</button>
+                    <button onClick={handleInitializeBalance}>Initialize Balance</button> {/* This button now uses the imported function */}
                 </div>
             </div>
         </div>
