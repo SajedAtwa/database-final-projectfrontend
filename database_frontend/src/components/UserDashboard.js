@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserProfile from './UserProfile';
 import { fetchBookings } from '../db methods/dbBookingList';
+import { deleteBooking } from '../db methods/dbBookingCancel';
+import { fetchBookingInfo } from '../db methods/dbBookingInfo';
 import '../static/css/UserDashboard.css';
 import * as User from "../Users.js";
 
@@ -11,7 +13,7 @@ function UserDashboard() {
         const savedUser = localStorage.getItem('user');
         return savedUser ? JSON.parse(savedUser) : {};
     });
-    const [bookings, setBookings] = useState([]);
+    const [bookings, setBookings] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [notifications, setNotifications] = useState([]);
@@ -30,8 +32,16 @@ function UserDashboard() {
         setLoading(true);
         console.log("Fetching bookings for UID:", userId, "with password:", password);
         fetchBookings(userId, password)
-            .then(fetchedBookings => {
-                setBookings(fetchedBookings);
+            .then(async (bookingIds) => {
+                const detailedBookings = await Promise.all(bookingIds.map(bookingId =>
+                    fetchBookingInfo(bookingId, userId, password)
+                ));
+                console.log("Detailed bookings fetched:", detailedBookings);
+                const bookingsDict = {};
+                detailedBookings.forEach(booking => {
+                    bookingsDict[booking.id] = booking;
+                });
+                setBookings(bookingsDict);
                 setLoading(false);
             })
             .catch(err => {
@@ -41,8 +51,28 @@ function UserDashboard() {
             });
 
         setNotifications(["Your next appointment is approaching!"]);
-
     }, [history]);
+
+    const handleDeleteBooking = (bookingId) => {
+        console.log("Attempting to delete booking with ID:", bookingId);  
+    
+        const password = User.getUser('password');
+        const userId = User.getUser('uid');
+        
+        console.log("Deleting booking with ID:", bookingId);
+        deleteBooking(userId, bookingId, password)
+            .then(() => {
+                const updatedBookings = { ...bookings };
+                delete updatedBookings[bookingId];
+                setBookings(updatedBookings);
+                alert('Booking deleted successfully');
+            })
+            .catch(err => {
+                console.error('Failed to delete booking:', err);
+                alert('Failed to delete booking');
+            });
+    };
+    
 
     const handleLogout = () => {
         User.clearUser();
@@ -68,11 +98,20 @@ function UserDashboard() {
                     <div>
                         <h2>Your Bookings</h2>
                         <ul>
-                            {bookings.length > 0 ? bookings.map(booking => (
-                                <li key={booking.id}>
-                                    Booking ID: {booking.id} - Service: {booking.service}
-                                </li>
-                            )) : <li>No bookings found.</li>}
+                        {Object.keys(bookings).length > 0 ? (
+                            <ul>
+                                {Object.entries(bookings).map(([bookingId, booking]) => (
+                                    <li key={bookingId}>
+                                        Booking ID: {booking.id} {}
+                                        
+                                        <button onClick={() => handleDeleteBooking(bookingId)}>Cancel Booking</button>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <li>No bookings found.</li>
+                        )}
+
                         </ul>
                     </div>
                 )}
