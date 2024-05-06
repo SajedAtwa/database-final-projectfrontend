@@ -4,7 +4,7 @@ import UserProfile from './UserProfile';
 import { fetchBookings } from '../db methods/dbBookingList';
 import { deleteBooking } from '../db methods/dbBookingCancel';
 import { fetchBookingInfo } from '../db methods/dbBookingInfo';
-import { initializeBalance } from '../db methods/dbBalance'; // Import the new function
+import { initializeBalance, viewBalance, importToBalance, exportFromBalance } from '../db methods/dbBalance';
 import '../static/css/UserDashboard.css';
 import * as User from "../Users.js";
 
@@ -17,6 +17,7 @@ function UserDashboard() {
     const [bookings, setBookings] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [balance, setBalance] = useState(0);  
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
@@ -86,12 +87,63 @@ function UserDashboard() {
 
     const handleInitializeBalance = async () => {
         const userId = User.getUser("uid");
-        const password = User.getUser("password");  // Ensure you are securely managing passwords
+        const password = User.getUser("password");
         try {
             const response = await initializeBalance(userId, password);
             alert("Balance initialized successfully!");
         } catch (error) {
             alert(`Failed to initialize balance: ${error.message}`);
+        }
+    };
+
+    const handleViewBalance = async () => {
+        const userId = User.getUser("uid");
+        const password = User.getUser("password");
+        try {
+            const result = await viewBalance(userId, password);
+            setBalance(result.balance);  // Set balance state
+            alert(`Your current balance is: ${result.balance}`);
+        } catch (error) {
+            alert(`Failed to view balance: ${error.message}`);
+        }
+    };
+
+    const handleImportToBalance = async () => {
+        const input = prompt("Enter amount to add:");
+        const amount = parseInt(input, 10); 
+        if (isNaN(amount) || amount <= 0) { 
+            alert("Please enter a valid positive integer.");
+            return; 
+        }
+    
+        const userId = User.getUser("uid");
+        const password = User.getUser("password");
+        try {
+            await importToBalance(userId, password, amount);
+            alert("Funds added to your balance successfully!");
+            handleViewBalance();  
+        } catch (error) {
+            alert(`Failed to add funds: ${error.message}`);
+        }
+    };
+    
+
+    const handleExportFromBalance = async () => {
+        const input = prompt("Enter amount to export:");
+        const amount = parseInt(input, 10); 
+        if (isNaN(amount) || amount <= 0) { 
+            alert("Please enter a valid positive integer.");
+            return; 
+        }
+    
+        const userId = User.getUser("uid");
+        const password = User.getUser("password");
+        try {
+            await exportFromBalance(userId, password, amount);
+            alert("Funds exported from your balance successfully!");
+            handleViewBalance();  
+        } catch (error) {
+            alert(`Failed to export funds: ${error.message}`);
         }
     };
     
@@ -110,20 +162,16 @@ function UserDashboard() {
                     <div>
                         <h2>Your Bookings</h2>
                         <ul>
-                        {Object.keys(bookings).length > 0 ? (
-                            <ul>
-                                {Object.entries(bookings).map(([bookingId, booking]) => (
+                            {Object.keys(bookings).length > 0 ? (
+                                Object.entries(bookings).map(([bookingId, booking]) => (
                                     <li key={bookingId}>
                                         Booking ID: {booking.id} {}
-                                        
                                         <button onClick={() => handleDeleteBooking(bookingId)}>Cancel Booking</button>
                                     </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <li>No bookings found.</li>
-                        )}
-
+                                ))
+                            ) : (
+                                <li>No bookings found.</li>
+                            )}
                         </ul>
                     </div>
                 )}
@@ -136,7 +184,13 @@ function UserDashboard() {
                 <div className="dashboard-section actions">
                     <button onClick={handleBookService}>Book New Service</button>
                     <button onClick={handleLogout}>Logout</button>
-                    <button onClick={handleInitializeBalance}>Initialize Balance</button> {/* This button now uses the imported function */}
+                    <button onClick={handleInitializeBalance}>Initialize Balance</button>
+                    <button onClick={handleViewBalance}>View Balance</button>
+                    <button onClick={handleImportToBalance}>Add Funds to Balance</button>
+                    <button onClick={handleExportFromBalance}>Export Funds from Balance</button>
+                </div>
+                <div>
+                    <h2>Current Balance: ${balance}</h2>
                 </div>
             </div>
         </div>
