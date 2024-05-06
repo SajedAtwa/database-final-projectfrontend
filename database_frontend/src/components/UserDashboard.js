@@ -17,7 +17,7 @@ function UserDashboard() {
     const [bookings, setBookings] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [balance, setBalance] = useState(0);  
+    const [balance, setBalance] = useState(0);  // Added to display balance
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
@@ -53,6 +53,7 @@ function UserDashboard() {
             });
 
         setNotifications(["Your next appointment is approaching!"]);
+        handleViewBalance();  // Initially fetch the balance when the component mounts
     }, [history]);
 
     const handleDeleteBooking = (bookingId) => {
@@ -75,6 +76,10 @@ function UserDashboard() {
             });
     };
 
+    const handleNavigate = (path) => {
+        history.push(path);
+    };
+
     const handleLogout = () => {
         User.clearUser();
         setUser({});
@@ -91,6 +96,7 @@ function UserDashboard() {
         try {
             const response = await initializeBalance(userId, password);
             alert("Balance initialized successfully!");
+            handleViewBalance();  // Refresh balance display after initializing balance
         } catch (error) {
             alert(`Failed to initialize balance: ${error.message}`);
         }
@@ -102,18 +108,17 @@ function UserDashboard() {
         try {
             const result = await viewBalance(userId, password);
             setBalance(result.balance);  // Set balance state
-            alert(`Your current balance is: ${result.balance}`);
         } catch (error) {
-            alert(`Failed to view balance: ${error.message}`);
+            console.error(`Failed to view balance: ${error.message}`);
         }
     };
 
     const handleImportToBalance = async () => {
         const input = prompt("Enter amount to add:");
-        const amount = parseInt(input, 10); 
-        if (isNaN(amount) || amount <= 0) { 
+        const amount = parseInt(input, 10); // Parse the input as an integer
+        if (isNaN(amount) || amount <= 0) { // Check if the parsed amount is not a number or less than or equal to zero
             alert("Please enter a valid positive integer.");
-            return; 
+            return; // Exit the function if validation fails
         }
     
         const userId = User.getUser("uid");
@@ -121,19 +126,18 @@ function UserDashboard() {
         try {
             await importToBalance(userId, password, amount);
             alert("Funds added to your balance successfully!");
-            handleViewBalance();  
+            handleViewBalance();  // Refresh balance display after successful transaction
         } catch (error) {
             alert(`Failed to add funds: ${error.message}`);
         }
     };
-    
 
     const handleExportFromBalance = async () => {
         const input = prompt("Enter amount to export:");
-        const amount = parseInt(input, 10); 
-        if (isNaN(amount) || amount <= 0) { 
+        const amount = parseInt(input, 10); // Parse the input as an integer
+        if (isNaN(amount) || amount <= 0) { // Check if the parsed amount is not a number or less than or equal to zero
             alert("Please enter a valid positive integer.");
-            return; 
+            return; // Exit the function if validation fails
         }
     
         const userId = User.getUser("uid");
@@ -141,23 +145,24 @@ function UserDashboard() {
         try {
             await exportFromBalance(userId, password, amount);
             alert("Funds exported from your balance successfully!");
-            handleViewBalance();  
+            handleViewBalance();  // Refresh balance display after successful transaction
         } catch (error) {
             alert(`Failed to export funds: ${error.message}`);
         }
     };
-    
 
     const onSaveProfile = (userData) => {
         setUser(userData);
         localStorage.setItem('user', JSON.stringify(userData));
     };
 
+    const userId = User.getUser("uid");
+
     return (
         <div className="user-container">
             <UserProfile user={user} onSaveProfile={onSaveProfile} />
             <div className="user-dashboard">
-                <h1>Welcome, {user.username}!</h1>
+                <h1>Welcome, {userId}!</h1>
                 {loading ? <div>Loading bookings...</div> : error ? <div>Error: {error}</div> : (
                     <div>
                         <h2>Your Bookings</h2>
@@ -182,7 +187,8 @@ function UserDashboard() {
                     ))}
                 </div>
                 <div className="dashboard-section actions">
-                    <button onClick={handleBookService}>Book New Service</button>
+                    <button onClick={() => handleNavigate('/repair_wave')}>Book New Service With Repair Wave</button>
+                    <button onClick={() => handleNavigate('/clean_touch')}>Book New Service with Clean Touch</button>
                     <button onClick={handleLogout}>Logout</button>
                     <button onClick={handleInitializeBalance}>Initialize Balance</button>
                     <button onClick={handleViewBalance}>View Balance</button>
