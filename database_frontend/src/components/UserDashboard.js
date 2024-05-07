@@ -17,7 +17,7 @@ function UserDashboard() {
     const [bookings, setBookings] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [balance, setBalance] = useState(0);  // Added to display balance
+    const [balance, setBalance] = useState(0);  
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
@@ -53,7 +53,7 @@ function UserDashboard() {
             });
 
         setNotifications(["Your next appointment is approaching!"]);
-        handleViewBalance();  // Initially fetch the balance when the component mounts
+        handleViewBalance();  
     }, [history]);
 
     const handleDeleteBooking = (bookingId) => {
@@ -96,7 +96,7 @@ function UserDashboard() {
         try {
             const response = await initializeBalance(userId, password);
             alert("Balance initialized successfully!");
-            handleViewBalance();  // Refresh balance display after initializing balance
+            handleViewBalance();  
         } catch (error) {
             alert(`Failed to initialize balance: ${error.message}`);
         }
@@ -115,10 +115,10 @@ function UserDashboard() {
 
     const handleImportToBalance = async () => {
         const input = prompt("Enter amount to add:");
-        const amount = parseInt(input, 10); // Parse the input as an integer
-        if (isNaN(amount) || amount <= 0) { // Check if the parsed amount is not a number or less than or equal to zero
+        const amount = parseInt(input, 10); 
+        if (isNaN(amount) || amount <= 0) { 
             alert("Please enter a valid positive integer.");
-            return; // Exit the function if validation fails
+            return; 
         }
     
         const userId = User.getUser("uid");
@@ -126,7 +126,7 @@ function UserDashboard() {
         try {
             await importToBalance(userId, password, amount);
             alert("Funds added to your balance successfully!");
-            handleViewBalance();  // Refresh balance display after successful transaction
+            handleViewBalance(); 
         } catch (error) {
             alert(`Failed to add funds: ${error.message}`);
         }
@@ -134,10 +134,10 @@ function UserDashboard() {
 
     const handleExportFromBalance = async () => {
         const input = prompt("Enter amount to export:");
-        const amount = parseInt(input, 10); // Parse the input as an integer
-        if (isNaN(amount) || amount <= 0) { // Check if the parsed amount is not a number or less than or equal to zero
+        const amount = parseInt(input, 10); 
+        if (isNaN(amount) || amount <= 0) { 
             alert("Please enter a valid positive integer.");
-            return; // Exit the function if validation fails
+            return; 
         }
     
         const userId = User.getUser("uid");
@@ -145,7 +145,7 @@ function UserDashboard() {
         try {
             await exportFromBalance(userId, password, amount);
             alert("Funds exported from your balance successfully!");
-            handleViewBalance();  // Refresh balance display after successful transaction
+            handleViewBalance();  
         } catch (error) {
             alert(`Failed to export funds: ${error.message}`);
         }
@@ -170,7 +170,9 @@ function UserDashboard() {
                             {Object.keys(bookings).length > 0 ? (
                                 Object.entries(bookings).map(([bookingId, booking]) => (
                                     <li key={bookingId}>
-                                        Booking ID: {booking.id} {}
+                                        <strong>Booking ID:</strong> {booking.id}<br />
+                                        <strong>Service:</strong> {booking.service}<br />
+                                        <strong>Availability:</strong> {booking.availability}<br />
                                         <button onClick={() => handleDeleteBooking(bookingId)}>Cancel Booking</button>
                                     </li>
                                 ))
