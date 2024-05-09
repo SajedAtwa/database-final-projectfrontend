@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-// Assuming you're fetching userId and password the same way you do for booking creation
 export async function fetchBookings(userId, password) {
     try {
         const response = await axios.post('http://localhost:5000/bookings/list', {
-            uid: userId,  // user ID
-            password: password  // password needs to be included if backend expects it
+            uid: userId,  
+            password: password  
         }, {
             headers: {
                 'Content-Type': 'application/json'
@@ -18,7 +17,7 @@ export async function fetchBookings(userId, password) {
         }
 
         console.log('Bookings fetched successfully:', response.data);
-        return response.data.bookings; // Adjust based on actual API response
+        return response.data.bookings; 
     } catch (error) {
         console.error('Error in fetchBookings:', error);
         throw error;

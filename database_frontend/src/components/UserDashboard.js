@@ -4,6 +4,7 @@ import UserProfile from './UserProfile';
 import { fetchBookings } from '../db methods/dbBookingList';
 import { deleteBooking } from '../db methods/dbBookingCancel';
 import { fetchBookingInfo } from '../db methods/dbBookingInfo';
+import { fetchServiceInfo } from '../db methods/dbServiceInfo';
 import { initializeBalance, viewBalance, importToBalance, exportFromBalance } from '../db methods/dbBalance';
 import '../static/css/UserDashboard.css';
 import * as User from "../Users.js";
@@ -21,26 +22,42 @@ function UserDashboard() {
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
-        console.log("UserDashboard rendered");
-
         if (!User.getUser("uid")) {
             history.push('/signin');
+            console.log('Redirecting to sign in because no user ID found');
             return;
         }
-
+    
         const userId = User.getUser("uid");
         const password = User.getUser("password");
-
+        console.log(`User ID: ${userId} and password obtained for fetching bookings`);
+    
         setLoading(true);
-        console.log("Fetching bookings for UID:", userId, "with password:", password);
         fetchBookings(userId, password)
             .then(async (bookingIds) => {
-                const detailedBookings = await Promise.all(bookingIds.map(bookingId =>
-                    fetchBookingInfo(bookingId, userId, password)
-                ));
-                console.log("Detailed bookings fetched:", detailedBookings);
+                console.log('Booking IDs fetched:', bookingIds);
+                if (bookingIds.length === 0) console.log('No bookings found for user');
+    
+                const bookingsWithDetails = await Promise.all(bookingIds.map(async (bookingId) => {
+                    const bookingInfo = await fetchBookingInfo(bookingId, userId, password);
+                    console.log(`Booking details for ID ${bookingId}:`, bookingInfo);
+    
+                    console.log(`Fetching service info for service ID: ${bookingInfo.service}`);
+                    const serviceInfo = await fetchServiceInfo(bookingInfo.service); 
+                    console.log(`Service details for service ID ${bookingInfo.service}:`, serviceInfo);
+    
+                    return {
+                        ...bookingInfo,
+                        serviceName: serviceInfo.name,
+                        serviceDescription: serviceInfo.description,
+                        serviceStartDateTime: serviceInfo.start_datetime,
+                        serviceEndDateTime: serviceInfo.end_datetime
+                    };
+                }));
+    
                 const bookingsDict = {};
-                detailedBookings.forEach(booking => {
+                bookingsWithDetails.forEach(booking => {
+                    console.log(`Adding booking details to the state for booking ID: ${booking.id}`, booking);
                     bookingsDict[booking.id] = booking;
                 });
                 setBookings(bookingsDict);
@@ -51,10 +68,13 @@ function UserDashboard() {
                 setError('Failed to load bookings');
                 setLoading(false);
             });
-
+    
         setNotifications(["Your next appointment is approaching!"]);
+        console.log('Notifications set for user dashboard');
         handleViewBalance();  
     }, [history]);
+    
+       
 
     const handleDeleteBooking = (bookingId) => {
         console.log("Attempting to delete booking with ID:", bookingId);  
@@ -171,7 +191,10 @@ function UserDashboard() {
                                 Object.entries(bookings).map(([bookingId, booking]) => (
                                     <li key={bookingId}>
                                         <strong>Booking ID:</strong> {booking.id}<br />
-                                        <strong>Service:</strong> {booking.service}<br />
+                                        <strong>Service Name:</strong> {booking.serviceName}<br />
+                                        <strong>Service Description:</strong> {booking.serviceDescription}<br />
+                                        <strong>Service Start:</strong> {new Date(booking.serviceStartDateTime).toLocaleString()}<br />
+                                        <strong>Service End:</strong> {new Date(booking.serviceEndDateTime).toLocaleString()}<br />
                                         <strong>Availability:</strong> {booking.availability}<br />
                                         <button onClick={() => handleDeleteBooking(bookingId)}>Cancel Booking</button>
                                     </li>
