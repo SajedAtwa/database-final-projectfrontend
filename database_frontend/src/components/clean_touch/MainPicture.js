@@ -10,9 +10,9 @@ function MainPicture() {
                     position: 'absolute', bottom: '60%', left: '15vw', transform: 'translateY(50%)',
                     backgroundColor: 'rgba(0, 0, 0, 0.9)', padding: '10px', borderRadius: '10px'
                 }}>
-                    <h2 style={{ color: '#fdd835' }}>Experience a Fresh Way to Manage Money</h2> {/* Yellow Color */}
-                    <p style={{ color: 'white' }}>Sign up for Mint to reach your goals with personalized insights.</p>
-                    <a href="/clean_touch/search" className="btn" style={{ backgroundColor: '#0057b7', color: 'white', marginTop: '10px' }}>Click Me</a> {/* Blue Button */}
+                    <h2 style={{ color: '#fdd835' }}>Experience a Fresh Way to Get Your Car Cleaned</h2> {/* Yellow Color */}
+                    <p style={{ color: 'white' }}>Browse our services to find the perfect car wash for your needs.</p>
+                    <a href="/clean_touch/search" className="btn" style={{ backgroundColor: '#0057b7', color: 'white', marginTop: '10px' }}>Explore Services</a> {/* Blue Button */}
                 </div>
             </div>
         </div>

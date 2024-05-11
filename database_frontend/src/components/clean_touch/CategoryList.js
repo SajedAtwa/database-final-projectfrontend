@@ -38,7 +38,6 @@ function CleanTouchCategoryList() {
           </Link>
         </div>
       ))}
-      <a href="/PopularDealers" className="btn btn-primary btn-lg" tabIndex="-1" role="button">View more</a>
     </div>
   );
 }

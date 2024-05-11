@@ -1,7 +1,7 @@
 import React from 'react';
-import CleanTouchHeader from './Header';
 import MainPicture from './MainPicture';
 import CleanTouchCategoryList from './CategoryList';
+import CleanTouchHeader from './Header';
 import CleanTouchFooter from './Footer';
 import '../../static/css/clean_touch/HomePage.css';
 
