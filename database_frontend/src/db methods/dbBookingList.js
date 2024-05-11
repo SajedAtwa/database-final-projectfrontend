@@ -1,8 +1,10 @@
 import axios from 'axios';
+import process from 'process';
 
 export async function fetchBookings(userId, password) {
     try {
-        const response = await axios.post('http://localhost:5000/bookings/list', {
+        const backendServer = process.env.BACKEND_SERVER || 'http://localhost:5000'; 
+        const response = await axios.post(`${backendServer}/bookings/list`, {
             uid: userId,  
             password: password  
         }, {

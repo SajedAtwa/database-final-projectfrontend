@@ -1,10 +1,12 @@
 // dbAdmin.js
 import axios from 'axios';
+import process from 'process';
 
 // Function to call the populate endpoint
 export const populateDatabase = async (uid, password) => {
     try {
-      const response = await axios.post(`http://localhost:5000/tables/populate`, {
+      const backendServer = process.env.BACKEND_SERVER || 'http://localhost:5000'; 
+        const response = await axios.post(`${backendServer}/tables/populate`, {
         uid,
         password,
       });
@@ -18,7 +20,8 @@ export const populateDatabase = async (uid, password) => {
 // Function to call the drop endpoint
 export const dropDatabase = async (uid, password) => {
     try {
-      const response = await axios.post(`http://localhost:5000/tables/drop`, {
+      const backendServer = process.env.BACKEND_SERVER || 'http://localhost:5000'; 
+        const response = await axios.post(`${backendServer}/tables/drop`, {
         uid, 
         password,
       });
