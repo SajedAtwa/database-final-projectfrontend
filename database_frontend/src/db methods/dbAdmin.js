@@ -7,7 +7,7 @@ export const populateDatabase = async (uid, password) => {
     try {
       const backendServer = process.env.BACKEND_SERVER || 'http://localhost:5000'; 
         const response = await axios.post(`${backendServer}/tables/populate`, {
-        uid,
+        uid, 
         password,
       });
       console.log('Database populated:', response.data);

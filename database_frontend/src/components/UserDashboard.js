@@ -221,7 +221,7 @@ function UserDashboard() {
                     <button onClick={handleExportFromBalance}>Export Funds from Balance</button>
                 </div>
                 <div>
-                    <h2>Current Balance: ${balance}</h2>
+                    <h2>Current Balance: ${balance.toFixed(2)}</h2>
                 </div>
             </div>
         </div>
