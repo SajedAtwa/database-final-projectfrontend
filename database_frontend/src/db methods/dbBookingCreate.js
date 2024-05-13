@@ -1,9 +1,11 @@
 import axios from 'axios';
+import process from 'process';
 
 export async function createBooking(bookingDetails) {
     try {
+        const backendServer = process.env.BACKEND_SERVER || 'http://localhost:5000'; 
         console.log('Requesting to create booking with details:', bookingDetails);
-        const response = await axios.post(`http://localhost:5000/bookings/create`, bookingDetails);
+        const response = await axios.post(`${backendServer}/bookings/create`, bookingDetails);
         console.log('Response from creating booking:', response.data);
 
         if (response.data.error) {

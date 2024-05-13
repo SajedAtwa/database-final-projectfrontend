@@ -1,4 +1,5 @@
 import axios from 'axios';
+import process from 'process';
 
 export async function dbSignUp(password, email) {
 
@@ -8,7 +9,8 @@ export async function dbSignUp(password, email) {
     };
 
     try {
-        const response = await axios.post('http://127.0.0.1:5000/users/create', submission);
+        const backendServer = process.env.BACKEND_SERVER || 'http://localhost:5000'; 
+        const response = await axios.post(`${backendServer}/users/create`, submission);
 
         const uid = response.data.uid;
         const error = response.data.error;

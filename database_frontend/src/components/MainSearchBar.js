@@ -7,36 +7,36 @@ import { dbSearch } from '../db methods/dbSearch';
 function MainSearchBar() {
     const history = useHistory();
     const [device, setDevice] = useState('');
-    const [issue, setIssue] = useState(''); 
+    const [issue, setIssue] = useState('');
     const [location, setLocation] = useState('');
     const [startDate, setStartDate] = useState('');
     const [startTime, setStartTime] = useState('');
     const [endDate, setEndDate] = useState('');
     const [endTime, setEndTime] = useState('');
     const [error, setError] = useState('');
-    const [searchResults, setSearchResults] = useState('');
+    const [searchResults, setSearchResults] = useState(null); // Set initial state to null
 
     const handleSearch = async () => {
         if (!startDate || !startTime || !endDate || !endTime) {
             setError('Please fill in all date and time fields.');
             return;
         }
-    
+
         const formattedStartDateTime = `${startDate} ${startTime}:00.000`;
         const formattedEndDateTime = `${endDate} ${endTime}:00.000`;
-    
+
         // Validate that the start date is before the end date
         if (new Date(formattedStartDateTime) >= new Date(formattedEndDateTime)) {
             setError('Start date and time must be before end date and time.');
             return;
         }
-    
+
         console.log('Formatted Start DateTime:', formattedStartDateTime);
         console.log('Formatted End DateTime:', formattedEndDateTime);
         try {
             const services = {
-                ...(device && { device: device }), 
-                ...(issue && { device_repair: issue }) 
+                ...(device && { device: device }),
+                ...(issue && { device_repair: issue })
             };
             console.log('Services being passed:', services);
             const data = await dbSearch(services, location, formattedStartDateTime, formattedEndDateTime);
@@ -79,7 +79,7 @@ function MainSearchBar() {
             {error && <p className="error">{error}</p>}
             <div className="main-search-bar">
                 <select value={device} onChange={(e) => setDevice(e.target.value)}>
-                    <option value="" disabled selected>Select a Device</option>
+                    <option value="" disabled>Select a Device</option>
                     <option value="IPHONE">IPHONE</option>
                     <option value="IPAD">IPAD</option>
                     <option value="MACBOOK">MACBOOK</option>
@@ -89,7 +89,7 @@ function MainSearchBar() {
                     <option value="XIAOMI">XIAOMI</option>
                 </select>
                 <select value={issue} onChange={(e) => setIssue(e.target.value)}>
-                    <option value="" disabled selected>Select an Issue</option>
+                    <option value="" disabled>Select an Issue</option>
                     <option value="SCREEN_REPAIR">Screen Repair</option>
                     <option value="CAMERA_REPAIR">Camera Repair</option>
                     <option value="BATTERY_REPLACEMENT">Battery Replacement</option>
