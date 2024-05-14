@@ -6,8 +6,9 @@ import { deleteBooking } from '../db methods/dbBookingCancel';
 import { fetchBookingInfo } from '../db methods/dbBookingInfo';
 import { fetchServiceInfo } from '../db methods/dbServiceInfo';
 import { initializeBalance, viewBalance, importToBalance, exportFromBalance } from '../db methods/dbBalance';
-import '../static/css/UserDashboard.css';
 import * as User from "../Users.js";
+
+import '../static/css/UserDashboard.css'; 
 
 function UserDashboard() {
     const history = useHistory();
@@ -18,8 +19,7 @@ function UserDashboard() {
     const [bookings, setBookings] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [balance, setBalance] = useState(0);  
-    const [notifications, setNotifications] = useState([]);
+    const [balance, setBalance] = useState(0);
 
     useEffect(() => {
         if (!User.getUser("uid")) {
@@ -69,8 +69,6 @@ function UserDashboard() {
                 setLoading(false);
             });
     
-        setNotifications(["Your next appointment is approaching!"]);
-        console.log('Notifications set for user dashboard');
         handleViewBalance();  
     }, [history]);
     
@@ -205,20 +203,17 @@ function UserDashboard() {
                         </ul>
                     </div>
                 )}
-                <div className="dashboard-section">
-                    <h2>Notifications</h2>
-                    {notifications.map((note, index) => (
-                        <p key={index}>{note}</p>
-                    ))}
-                </div>
-                <div className="dashboard-section actions">
-                    <button onClick={() => handleNavigate('/repair_wave')}>Book New Service With Repair Wave</button>
-                    <button onClick={() => handleNavigate('/clean_touch')}>Book New Service with Clean Touch</button>
-                    <button onClick={handleLogout}>Logout</button>
-                    <button onClick={handleInitializeBalance}>Initialize Balance</button>
-                    <button onClick={handleViewBalance}>View Balance</button>
-                    <button onClick={handleImportToBalance}>Add Funds to Balance</button>
-                    <button onClick={handleExportFromBalance}>Export Funds from Balance</button>
+                <div class="dashboard-section">
+                    <div class="top-row">
+                        <button onClick={handleInitializeBalance}>Initialize Balance</button>
+                        <button onClick={handleImportToBalance}>Add Funds to Balance</button>
+                        <button onClick={handleExportFromBalance}>Export Funds from Balance</button>
+                    </div>
+                    <div class="bottom-row">
+                        <button onClick={() => handleNavigate('/repair_wave')}>Book New Service With Repair Wave</button>
+                        <button onClick={() => handleNavigate('/clean_touch')}>Book New Service with Clean Touch</button>
+                        <button onClick={handleLogout}>Logout</button>
+                    </div>
                 </div>
                 <div>
                     <h2>Current Balance: ${balance.toFixed(2)}</h2>

@@ -50,9 +50,9 @@ function SignIn() {
 
     return (
         <div className="signin-container">
-            {errorMessage && <div className="signin-error">{errorMessage}</div>}
-            {successMessage && <div className="signin-success">{successMessage}</div>}
             <form onSubmit={handleSignIn} className="signin-form">
+                {errorMessage && <div className="signin-error">{errorMessage}</div>}
+                {successMessage && <div className="signin-success">{successMessage}</div>}
                 <h2>Sign In</h2>
                 <div className="input-group">
                     <label htmlFor="username">Username:</label>

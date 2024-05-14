@@ -1,23 +1,40 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
 .user-container {
     font-family: 'Arial', sans-serif;
     max-width: 1200px;
     margin: auto;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: #fff;
     display: flex;
-    justify-content: space-between; /* Ensure children elements (service and balance actions) are on opposite sides */
+    justify-content: space-between;
+    border: 1px solid #eee;
+    border-radius: 8px;
 }
 
 .user-dashboard {
-    flex-grow: 1; /* Take available space */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding: 30px;
+    margin-left: 20%;
+    background: #e8f0f8;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.centered-section, h1 {
+.user-dashboard h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 34px; /* Make welcome text larger */
     text-align: center;
+}
+
+.user-dashboard h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px; /* Make welcome text larger */
+    text-align: center;
+    font-weight: bold;
 }
 
 ul {
@@ -25,58 +42,59 @@ ul {
     padding: 0;
 }
 
-li {
-    background-color: #f7f7f7;
-    margin: 5px 0;
-    padding: 10px;
+.user-dashboard li {
+    background-color: #fff;
+    padding: 60px;
+    
     border-radius: 8px;
     display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    
 }
 
-button {
-    background-color: #7fbace;
+.user-dashboard button {
+    background-color: #34568B;
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 20px; /* Ensure buttons are rounded */
+    border-radius: 5px; /* Make buttons round */
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
     font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     margin: 10px;
 }
 
-button:hover {
-    background-color: #91c2d3;
+.user-dashboard button:hover {
+    background-color: #1a53f0;
     transform: scale(1.05);
 }
 
-.dashboard-section {
-    background-color: #f8f8f8;
+.user-dashboard .dashboard-section {
+    background-color: #f6f6f6;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     margin-top: 10px;
-}
-
-.service-actions {
-    display: flex;
-    flex-direction: column; /* Align buttons from top to bottom */
-    gap: 15px;
-    align-items: flex-end; /* Align to the right */
-}
-
-.balance-actions {
-    display: flex;
-    flex-direction: column; /* Align buttons from top to bottom */
-    gap: 15px;
-    align-items: flex-start; /* Align to the left */
-}
-
-.service-actions button, .balance-actions button {
-    min-width: 150px;
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.user-dashboard .top-row, .user-dashboard .bottom-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.user-dashboard .top-row button, .user-dashboard .bottom-row button {
+    min-width: 220px;
 }
