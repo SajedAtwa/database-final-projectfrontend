@@ -34,9 +34,16 @@
 
 .info-point-icon {
     max-width: 100px;
-    height: auto;
-    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin: 0 auto;
 }
+
+.info-point-icon img {
+    max-width: 100%; 
+}
+
 
 .info-section p,
 .info-point p {

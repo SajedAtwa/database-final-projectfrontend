@@ -21,7 +21,7 @@ function SignUp() {
 
             const data = await response.json();
             if (data.error) {
-                setError(data.error);
+                setError('Username already exists.');
             } else {
                 
                 history.push({
