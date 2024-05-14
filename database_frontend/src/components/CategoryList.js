@@ -6,8 +6,8 @@ import image3 from '../static/images/water_damage.png';
 import image4 from '../static/images/camera.png';
 import image5 from '../static/images/keyboard.png';
 import image6 from '../static/images/charging_port.png';
-import image7 from '../static/images/laptop.png';
-import image8 from '../static/images/tablet.png';
+import image7 from '../static/images/laptop-repair.png';
+import image8 from '../static/images/ipad-repair.png';
 
 function CategoryList() {
   const categories = [

@@ -1,4 +1,10 @@
-.user-container {
+.user-dashboard {
+    padding: 20px;
+    margin-left: 25%;
+    margin-top: 10px;
+    background: #e8f0f8; /* Light blue background for a clean look */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
     max-width: 1200px;
     margin: auto;
@@ -9,15 +15,24 @@
     justify-content: space-between; /* Ensure children elements (service and balance actions) are on opposite sides */
 }
 
-.user-dashboard {
-    flex-grow: 1; /* Take available space */
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.user-dashboard h1 {
+    color: #34568B; /* Navy blue for title, consistent with other headings */
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.centered-section, h1 {
-    text-align: center;
+.dashboard-section {
+    margin-bottom: 20px;
+    background-color: #f6f6f6; /* Light grey to maintain a subtle contrast */
+    border-radius: 4px;
+    padding: 15px;
+}
+
+.dashboard-section h2 {
+    color: #34568B; /* Navy blue for section headings */
+    border-bottom: 2px solid #34568B; /* Consider changing to a lighter navy shade for consistency */
+    padding-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 ul {
@@ -25,58 +40,27 @@ ul {
     padding: 0;
 }
 
-li {
-    background-color: #f7f7f7;
-    margin: 5px 0;
+.dashboard-section ul li {
+    background: #fff; /* Keeping white for clean design */
     padding: 10px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #eee; /* Might consider a light navy border if more integration is needed */
 }
 
-button {
-    background-color: #7fbace;
-    color: white;
-    border: none;
+.actions {
+    text-align: center;
+}
+
+.actions button {
     padding: 10px 20px;
     border-radius: 20px; /* Ensure buttons are rounded */
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    font-size: 16px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    margin: 10px;
+    background-color: #34568B; /* Dark navy blue for buttons */
+    color: white;
+    transition: background-color 0.2s ease;
 }
 
-button:hover {
-    background-color: #91c2d3;
-    transform: scale(1.05);
-}
-
-.dashboard-section {
-    background-color: #f8f8f8;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    margin-top: 10px;
-}
-
-.service-actions {
-    display: flex;
-    flex-direction: column; /* Align buttons from top to bottom */
-    gap: 15px;
-    align-items: flex-end; /* Align to the right */
-}
-
-.balance-actions {
-    display: flex;
-    flex-direction: column; /* Align buttons from top to bottom */
-    gap: 15px;
-    align-items: flex-start; /* Align to the left */
-}
-
-.service-actions button, .balance-actions button {
-    min-width: 150px;
-    margin-bottom: 10px;
+.actions button:hover {
+    background-color: #1a53f0; /* Lighter navy blue for hover effect */
 }

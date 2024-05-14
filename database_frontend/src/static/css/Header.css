@@ -1,6 +1,6 @@
 /* Header.css */
 header {
-    background-color: #7b5a88;
+    background-color: #34568B; /* Dark navy blue, matching the button color */
     color: white;
     display: flex;
     justify-content: space-between;
@@ -8,7 +8,6 @@ header {
     padding: 1rem;
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
 }
 
 header .logo a,
@@ -23,19 +22,16 @@ header nav a {
 
 header .logo a:hover,
 header nav a:hover {
-    background-color: #5C5470;
-
+    background-color: #1a53f0; /* Lighter navy blue for hover, matches h1 hover */
 }
 
 header .logo a {
     font-size: 1.5rem;
-
 }
 
 header nav {
     display: flex;
     gap: 10px;
-
 }
 
 /* Responsive adjustments */
@@ -54,6 +50,5 @@ header nav {
     header nav a {
         width: 100%;
         text-align: center;
-
     }
 }

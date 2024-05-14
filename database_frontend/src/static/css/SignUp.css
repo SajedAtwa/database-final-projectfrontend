@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f4f1fa;
+    background-color: #e8f0f8; /* Light blue background for a cohesive look with the signin container */
 }
 
 .signup-form {
@@ -16,28 +16,28 @@
 }
 
 .signup-form h2 {
-    margin-bottom: 1rem;
-    color: #826fa9;
+    text-align: center;
+    color: #34568B; /* Navy blue for text, to match overall theme */
 }
 
 .signup-form label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #826fa9;
+    color: #34568B; /* Navy blue for consistency with h2 and other text labels */
 }
 
 .signup-form input {
     width: 100%;
     padding: 0.75rem;
     margin-bottom: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid #ccc; /* Consider adjusting if more contrast is needed */
     border-radius: 4px;
 }
 
 .signup-form button {
     width: 100%;
     padding: 0.75rem;
-    background-color: #826fa9;
+    background-color: #34568B; /* Navy blue to match buttons in other forms */
     color: white;
     border: none;
     border-radius: 4px;
@@ -45,7 +45,7 @@
 }
 
 .signup-form button:hover {
-    background-color: #5C5470;
+    background-color: #1a53f0; /* Lighter navy blue for hover, consistent with other forms */
 }
 
 .signup-error {
