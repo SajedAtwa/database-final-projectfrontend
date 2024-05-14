@@ -18,8 +18,9 @@ function AvailabilityList() {
         endDate: '',
         endTime: ''
     };
-
+	
     console.log('Extracted search results:', searchResults);
+    console.log('Extracted search results:', typeof(searchResults));
     console.log('Extracted service:', service);
 
     const handleBookingClick = async (businessId, availabilityToServiceId) => {

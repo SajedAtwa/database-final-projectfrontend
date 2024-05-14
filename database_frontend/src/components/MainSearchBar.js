@@ -7,16 +7,16 @@ import { dbSearch } from '../db methods/dbSearch';
 function MainSearchBar() {
     const history = useHistory();
     const [device, setDevice] = useState('');
-    const [issue, setIssue] = useState('');
-    const [location, setLocation] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [startTime, setStartTime] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [endTime, setEndTime] = useState('');
+    const [issue, setIssue] = useState(sessionStorage.getItem('issue') || '');
+    const [location, setLocation] = useState(sessionStorage.getItem('location') || '');
+    const [startDate, setStartDate] = useState(sessionStorage.getItem('startDate') || '');
+    const [startTime, setStartTime] = useState(sessionStorage.getItem('startTime') || '');
+    const [endTime, setEndTime] = useState(sessionStorage.getItem('endTime') || '');
     const [error, setError] = useState('');
     const [searchResults, setSearchResults] = useState(null); // Set initial state to null
 
     const handleSearch = async () => {
+	    const endDate=startDate;
         if (!startDate || !startTime || !endDate || !endTime) {
             setError('Please fill in all date and time fields.');
             return;
@@ -71,6 +71,12 @@ function MainSearchBar() {
             console.error('Error during search:', err);
             setError('Search request failed. Please try again later.');
         }
+	    sessionStorage.setItem("issue", issue);
+	    sessionStorage.setItem("location", location);
+	    sessionStorage.setItem("startDate", startDate);
+	    sessionStorage.setItem("startTime", startTime);
+	    sessionStorage.setItem("endTime", endTime);
+
     };
 
     return (
@@ -97,7 +103,6 @@ function MainSearchBar() {
                 <input type="text" placeholder="Enter Your ZipCode" value={location} onChange={(e) => setLocation(e.target.value)} />
                 <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                 <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
-                <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                 <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
                 <button onClick={handleSearch}>Search</button>
             </div>
