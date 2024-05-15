@@ -5,9 +5,15 @@ export async function createBusinessAvailability(businessId, availabilityDetails
     try {
         const backendServer = process.env.BACKEND_SERVER || 'http://localhost:5000'; 
         console.log('Requesting to create availability with details:', businessId, availabilityDetails);
+        const { start_datetime, end_datetime, start_time, end_time, services, device } = availabilityDetails;
         const response = await axios.post(`${backendServer}/availabilities/create`, {
             uid: businessId, 
-            ...availabilityDetails,
+            start_datetime,
+            end_datetime,
+            start_time,
+            end_time,
+            services,
+            device,
             password
         });
         console.log('Response from creating availability:', response.data);

@@ -14,8 +14,8 @@ function BusinessDashboard() {
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [availabilityDetails, setAvailabilityDetails] = useState({
         date: '',
-        startTime: '',
-        endTime: '',
+        start_time: '',
+        end_time: '',
         services: '',
         device: ''
     });
@@ -59,28 +59,28 @@ function BusinessDashboard() {
         }
         setLoading(false);
     };
-    
+
     const handleCreateAvailability = async (e) => {
         e.preventDefault();
         const userId = User.getUser("uid");
         const password = User.getUser("password");
         setLoading(true);
         try {
-            const { date, startTime, endTime, services, device } = availabilityDetails;
-            const start_datetime = `${date} ${startTime}:00.000`;
-            const end_datetime = `${date} ${endTime}:00.000`;
+            const { date, start_time, end_time, services, device } = availabilityDetails;
+            const start_datetime = `${date} ${start_time}:00.000`;
+            const end_datetime = `${date} ${end_time}:00.000`;
     
             if (!userId) {
                 console.error('User ID is missing or not retrieved correctly.');
                 return;
             }
     
-            await createBusinessAvailability(userId, { start_datetime, end_datetime, start_time: startTime, end_time: endTime, services, device }, password);
+            await createBusinessAvailability(userId, { start_datetime, end_datetime, start_time, end_time, services, device }, password);
             setShowCreateForm(false);
             setAvailabilityDetails({
                 date: '',
-                startTime: '',
-                endTime: '',
+                start_time: '',
+                end_time: '',
                 services: '',
                 device: ''
             });
@@ -89,6 +89,7 @@ function BusinessDashboard() {
         }
         setLoading(false);
     };
+      
     
     const handleUpdateAvailability = async (availabilityId, updatedDetails) => {
         const userId = User.getUser("uid");
@@ -146,8 +147,8 @@ function BusinessDashboard() {
                         <label>Start Time</label>
                         <input
                             type="time"
-                            name="startTime"
-                            value={availabilityDetails.startTime}
+                            name="start_time"
+                            value={availabilityDetails.start_time}
                             onChange={handleInputChange}
                             required
                         />
@@ -156,8 +157,8 @@ function BusinessDashboard() {
                         <label>End Time</label>
                         <input
                             type="time"
-                            name="endTime"
-                            value={availabilityDetails.endTime}
+                            name="end_time"
+                            value={availabilityDetails.end_time}
                             onChange={handleInputChange}
                             required
                         />
