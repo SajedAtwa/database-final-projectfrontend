@@ -27,34 +27,43 @@ function UserDashboard() {
             console.log('Redirecting to sign in because no user ID found');
             return;
         }
-    
+
         const userId = User.getUser("uid");
         const password = User.getUser("password");
         console.log(`User ID: ${userId} and password obtained for fetching bookings`);
-    
+
         setLoading(true);
         fetchBookings(userId, password)
             .then(async (bookingIds) => {
                 console.log('Booking IDs fetched:', bookingIds);
                 if (bookingIds.length === 0) console.log('No bookings found for user');
-    
+
                 const bookingsWithDetails = await Promise.all(bookingIds.map(async (bookingId) => {
                     const bookingInfo = await fetchBookingInfo(bookingId, userId, password);
                     console.log(`Booking details for ID ${bookingId}:`, bookingInfo);
-    
-                    console.log(`Fetching service info for service ID: ${bookingInfo.service}`);
-                    const serviceInfo = await fetchServiceInfo(bookingInfo.service); 
-                    console.log(`Service details for service ID ${bookingInfo.service}:`, serviceInfo);
-    
-                    return {
-                        ...bookingInfo,
-                        serviceName: serviceInfo.name,
-                        serviceDescription: serviceInfo.description,
-                        serviceStartDateTime: serviceInfo.start_datetime,
-                        serviceEndDateTime: serviceInfo.end_datetime
-                    };
+
+                    if (bookingInfo.service) {
+                        const serviceInfo = await fetchServiceInfo(bookingInfo.service);
+                        console.log(`Service details for service ID ${bookingInfo.service}:`, serviceInfo);
+
+                        return {
+                            ...bookingInfo,
+                            serviceName: serviceInfo.name,
+                            serviceDescription: serviceInfo.description,
+                            serviceStartDateTime: serviceInfo.start_datetime,
+                            serviceEndDateTime: serviceInfo.end_datetime
+                        };
+                    } else {
+                        return {
+                            ...bookingInfo,
+                            serviceName: 'N/A',
+                            serviceDescription: 'N/A',
+                            serviceStartDateTime: 'N/A',
+                            serviceEndDateTime: 'N/A'
+                        };
+                    }
                 }));
-    
+
                 const bookingsDict = {};
                 bookingsWithDetails.forEach(booking => {
                     console.log(`Adding booking details to the state for booking ID: ${booking.id}`, booking);
@@ -68,18 +77,16 @@ function UserDashboard() {
                 setError('Failed to load bookings');
                 setLoading(false);
             });
-    
-        handleViewBalance();  
+
+        handleViewBalance();
     }, [history]);
-    
-       
 
     const handleDeleteBooking = (bookingId) => {
         console.log("Attempting to delete booking with ID:", bookingId);  
-    
+
         const password = User.getUser('password');
         const userId = User.getUser('uid');
-        
+
         console.log("Deleting booking with ID:", bookingId);
         deleteBooking(userId, bookingId, password)
             .then(() => {
@@ -138,7 +145,7 @@ function UserDashboard() {
             alert("Please enter a valid positive integer.");
             return; 
         }
-    
+
         const userId = User.getUser("uid");
         const password = User.getUser("password");
         try {
@@ -157,7 +164,7 @@ function UserDashboard() {
             alert("Please enter a valid positive integer.");
             return; 
         }
-    
+
         const userId = User.getUser("uid");
         const password = User.getUser("password");
         try {
@@ -189,10 +196,10 @@ function UserDashboard() {
                                 Object.entries(bookings).map(([bookingId, booking]) => (
                                     <li key={bookingId}>
                                         <strong>Booking ID:</strong> {booking.id}<br />
-                                        <strong>Service Name:</strong> {booking.serviceName}<br />
-                                        <strong>Service Description:</strong> {booking.serviceDescription}<br />
-                                        <strong>Service Start:</strong> {new Date(booking.serviceStartDateTime).toLocaleString()}<br />
-                                        <strong>Service End:</strong> {new Date(booking.serviceEndDateTime).toLocaleString()}<br />
+                                        <strong>Service Name:</strong> {booking.serviceName || "Not available"}<br />
+                                        <strong>Service Description:</strong> {booking.serviceDescription || "Not available"}<br />
+                                        <strong>Service Start:</strong> {booking.serviceStartDateTime !== 'N/A' ? new Date(booking.serviceStartDateTime).toLocaleString() : "Not available"}<br />
+                                        <strong>Service End:</strong> {booking.serviceEndDateTime !== 'N/A' ? new Date(booking.serviceEndDateTime).toLocaleString() : "Not available"}<br />
                                         <strong>Availability:</strong> {booking.availability}<br />
                                         <button onClick={() => handleDeleteBooking(bookingId)}>Cancel Booking</button>
                                     </li>
@@ -203,13 +210,13 @@ function UserDashboard() {
                         </ul>
                     </div>
                 )}
-                <div class="dashboard-section">
-                    <div class="top-row">
+                <div className="dashboard-section">
+                    <div className="top-row">
                         <button onClick={handleInitializeBalance}>Initialize Balance</button>
                         <button onClick={handleImportToBalance}>Add Funds to Balance</button>
                         <button onClick={handleExportFromBalance}>Export Funds from Balance</button>
                     </div>
-                    <div class="bottom-row">
+                    <div className="bottom-row">
                         <button onClick={() => handleNavigate('/repair_wave')}>Book New Service With Repair Wave</button>
                         <button onClick={() => handleNavigate('/clean_touch')}>Book New Service with Clean Touch</button>
                         <button onClick={handleLogout}>Logout</button>
