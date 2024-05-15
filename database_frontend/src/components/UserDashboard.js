@@ -8,8 +8,7 @@ import { fetchServiceInfo } from '../db methods/dbServiceInfo';
 import { initializeBalance, viewBalance, importToBalance, exportFromBalance } from '../db methods/dbBalance';
 import * as User from "../Users.js";
 
-import '../static/css/UserDashboard.css'; 
-
+import '../static/css/UserDashboard.css';
 
 function UserDashboard() {
     const history = useHistory();
@@ -163,6 +162,7 @@ function UserDashboard() {
     };
 
     const userId = User.getUser("uid");
+    const isRootUser = userId === 'root';
 
     return (
         <div className="user-container">
@@ -216,7 +216,7 @@ function UserDashboard() {
                     </div>
                 </div>
                 <div>
-                    <h2>Current Balance: ${balance.toFixed(2)}</h2>
+                    <h2>{isRootUser ? 'Total Revenue' : 'Your Revenue'}: ${balance.toFixed(2)}</h2>
                 </div>
             </div>
         </div>
