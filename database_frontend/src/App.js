@@ -16,8 +16,12 @@ import IndividualCompanyPage from './components/clean_touch/CompanyTemplate';
 import MainSearch from './components/clean_touch/MainSearch.js';
 import AboutUs from './components/clean_touch/AboutUs.js';
 
+//Business homepage
+import BusinessHomepage from './components/Business/BusinessHomepage.js';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js'
+
 
 function App() {
   return (
@@ -42,6 +46,12 @@ function App() {
 
         <Route path='/clean_touch/company/:companyName' component={IndividualCompanyPage}/>
 
+        //Business homepage
+        <Route path='/business' component={BusinessHomepage}/>
+        <Route path='/business/create' component={BusinessHomepage}/>
+        <Route path='/business/delete' component={BusinessHomepage}/>
+        <Route path='/business/update' component={BusinessHomepage}/>
+        
       </Switch>
     </Router>
   );
