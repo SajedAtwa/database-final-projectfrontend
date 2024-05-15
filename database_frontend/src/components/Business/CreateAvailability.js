@@ -15,6 +15,12 @@ function CreateAvailability() {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const [isUserIdSubmitted, setIsUserIdSubmitted] = useState(false);
+
+    const handleUserIdSubmit = (event) => {
+        event.preventDefault();
+        setIsUserIdSubmitted(true);
+    };
 
     const handleCreate = async (event) => {
         event.preventDefault();
@@ -102,10 +108,10 @@ function CreateAvailability() {
                         <h2 className="text-xl font-semibold text-[#07074D] mb-4">Create Availability</h2>
                         {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
                         {successMessage && <div className="text-green-500 mb-4">{successMessage}</div>}
-                        <form onSubmit={handleCreate} className="w-full">
-                            <div className="mb-5">
+                        {!isUserIdSubmitted ? (
+                            <form onSubmit={handleUserIdSubmit} className="mb-5">
                                 <label htmlFor="uid" className="mb-3 block text-base font-medium text-[#07074D]">
-                                    User ID:
+                                    Enter User ID:
                                 </label>
                                 <input
                                     id="uid"
@@ -116,70 +122,8 @@ function CreateAvailability() {
                                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required
                                 />
-                            </div>
-                            <div className="mb-5">
-                                <label htmlFor="startDatetime" className="mb-3 block text-base font-medium text-[#07074D]">
-                                    Start DateTime:
-                                </label>
-                                <input
-                                    id="startDatetime"
-                                    name="start_datetime"
-                                    type="datetime-local"
-                                    value={startDatetime}
-                                    onChange={(e) => setStartDatetime(e.target.value)}
-                                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    required
-                                />
-                            </div>
-                            <div className="mb-5">
-                                <label htmlFor="endDatetime" className="mb-3 block text-base font-medium text-[#07074D]">
-                                    End DateTime:
-                                </label>
-                                <input
-                                    id="endDatetime"
-                                    name="end_datetime"
-                                    type="datetime-local"
-                                    value={endDatetime}
-                                    onChange={(e) => setEndDatetime(e.target.value)}
-                                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    required
-                                />
-                            </div>
-                            <div className="mb-5">
-                                <label className="mb-3 block text-base font-medium text-[#07074D]">
-                                    Days Supported:
-                                </label>
-                                <div className="grid grid-cols-3 gap-2">
-                                    {DAYS_OF_WEEK.map(day => (
-                                        <label key={day} className="flex items-center">
-                                            <input
-                                                type="checkbox"
-                                                checked={daysSupported.includes(day)}
-                                                onChange={() => handleDaysSupportedChange(day)}
-                                                className="mr-2"
-                                            />
-                                            {day}
-                                        </label>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="mb-5">
-                                <label htmlFor="services" className="mb-3 block text-base font-medium text-[#07074D]">
-                                    Services (comma separated):
-                                </label>
-                                <input
-                                    id="services"
-                                    name="services"
-                                    type="text"
-                                    value={services}
-                                    onChange={(e) => setServices(e.target.value)}
-                                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    required
-                                />
-                            </div>
-                            <div className="mb-5">
                                 <label htmlFor="password" className="mb-3 block text-base font-medium text-[#07074D]">
-                                    Password:
+                                    Enter Password:
                                 </label>
                                 <input
                                     id="password"
@@ -190,21 +134,90 @@ function CreateAvailability() {
                                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required
                                 />
-                            </div>
-                            <div className="flex space-x-4">
                                 <button
                                     type="submit"
-                                    className="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
-                                    Create
+                                    className="mt-4 w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none hover:shadow-form"
+                                >
+                                    Submit
                                 </button>
-                                <button
-                                    type="button"
-                                    onClick={handleCancel}
-                                    className="hover:shadow-form w-full rounded-md bg-gray-500 py-3 px-8 text-center text-base font-semibold text-white outline-none">
-                                    Cancel
-                                </button>
-                            </div>
-                        </form>
+                            </form>
+                        ) : (
+                            <form onSubmit={handleCreate} className="w-full">
+                                <div className="mb-5">
+                                    <label htmlFor="startDatetime" className="mb-3 block text-base font-medium text-[#07074D]">
+                                        Start DateTime:
+                                    </label>
+                                    <input
+                                        id="startDatetime"
+                                        name="start_datetime"
+                                        type="datetime-local"
+                                        value={startDatetime}
+                                        onChange={(e) => setStartDatetime(e.target.value)}
+                                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                        required
+                                    />
+                                </div>
+                                <div className="mb-5">
+                                    <label htmlFor="endDatetime" className="mb-3 block text-base font-medium text-[#07074D]">
+                                        End DateTime:
+                                    </label>
+                                    <input
+                                        id="endDatetime"
+                                        name="end_datetime"
+                                        type="datetime-local"
+                                        value={endDatetime}
+                                        onChange={(e) => setEndDatetime(e.target.value)}
+                                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                        required
+                                    />
+                                </div>
+                                <div className="mb-5">
+                                    <label className="mb-3 block text-base font-medium text-[#07074D]">
+                                        Days Supported:
+                                    </label>
+                                    <div className="grid grid-cols-3 gap-2">
+                                        {DAYS_OF_WEEK.map(day => (
+                                            <label key={day} className="flex items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={daysSupported.includes(day)}
+                                                    onChange={() => handleDaysSupportedChange(day)}
+                                                    className="mr-2"
+                                                />
+                                                {day}
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="mb-5">
+                                    <label htmlFor="services" className="mb-3 block text-base font-medium text-[#07074D]">
+                                        Services (comma separated):
+                                    </label>
+                                    <input
+                                        id="services"
+                                        name="services"
+                                        type="text"
+                                        value={services}
+                                        onChange={(e) => setServices(e.target.value)}
+                                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                        required
+                                    />
+                                </div>
+                                <div className="flex space-x-4">
+                                    <button
+                                        type="submit"
+                                        className="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
+                                        Create
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={handleCancel}
+                                        className="hover:shadow-form w-full rounded-md bg-gray-500 py-3 px-8 text-center text-base font-semibold text-white outline-none">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        )}
                     </div>
                 </div>
             </div>
