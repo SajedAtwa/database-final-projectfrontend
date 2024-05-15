@@ -1,7 +1,10 @@
 import React, { useState, useRef } from 'react'; // Import useRef
+import { useHistory } from 'react-router-dom';
 import CleanTouchHeader from './Header';
 import CleanTouchFooter from './Footer';
 import { dbSearch } from '../../db methods/dbSearch';
+import { createBooking } from '../../db methods/dbBookingCreate';
+import * as User from "../../Users.js";
 
 const VEHICLES = ["TOYOTA", "BMW", "VOLKSWAGEN"];
 const SERVICES = ["DETAILING", "GENERAL_WASH", "BRAKE_FLUID"];
@@ -15,7 +18,8 @@ function MainSearch() {
     const [error, setError] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [searchPerformed, setSearchPerformed] = useState(false);
-    
+
+    const history = useHistory();
     // Create a ref for the search results section
     const searchResultsRef = useRef(null);
 
@@ -24,10 +28,10 @@ function MainSearch() {
             setError('Please fill in all date and time fields.');
             return;
         }
-      
+
         const formattedStartDateTime = `${startDate} ${startTime}:00.000`;
         const formattedEndDateTime = `${startDate} 11:00:00.000`; // End time fixed at 11:00
-      
+
         try {
             const data = await dbSearch({}, "", formattedStartDateTime, formattedEndDateTime);
             setSearchPerformed(true);
@@ -53,12 +57,49 @@ function MainSearch() {
         }
     };
 
+    const handleBookingClick = async (businessId, availabilityToServiceId) => {
+        const userId = User.getUser('uid');
+        const password = User.getUser('password');
+        if (!userId) {
+            alert('User ID is missing. Please log in.');
+            return;
+        }
+
+        const formattedStartDateTime = startDate && startTime ? `${startDate} ${startTime}:00.000` : null;
+        const formattedEndDateTime = startDate && startTime ? `${startDate} 11:00:00.000` : null;
+
+        if (!formattedStartDateTime || !formattedEndDateTime) {
+            alert('Invalid date or time. Please check your inputs.');
+            return;
+        }
+
+        const bookingDetails = {
+            uid: userId,
+            password: password,
+            business: businessId,
+            availability_to_service: availabilityToServiceId,
+            start_datetime: formattedStartDateTime,
+            end_datetime: formattedEndDateTime,
+            service: { device, issue }
+        };
+
+        try {
+            const result = await createBooking(bookingDetails);
+            console.log('Booking successful!');
+            alert('Booking successful!');
+            history.push('/dashboard');
+        } catch (error) {
+            alert('Ensure you have sufficient funds, or correct any errors.');
+            console.error('Error creating booking:', error);
+        }
+    };
+
     return (
         <div className="clean_touch-main-search">
             <CleanTouchHeader />
             <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
                 <div className="py-4 px-6">
-                    <h1 className="text-2xl text-gray-900 font-bold text-center">Book Appointments with Nearby Repair Shops</h1>
+                    <h1 className="text-2xl text-gray-900 font-bold text-center">Book your next car wash nearby.</h1>
                     {error && <p className="text-red-500 text-center">{error}</p>}
                     <div className="mt-4">
                         <select className="shadow border rounded w-full py-2 px-3 text-gray-700" onChange={(e) => setDevice(e.target.value)} value={device}>
@@ -98,6 +139,9 @@ function MainSearch() {
                                         <p className="mt-1 text-xs leading-5 text-gray-500">Price: ${result.price}</p>
                                     </div>
                                 </div>
+                                <button onClick={() => handleBookingClick(result.id, result.availability)} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-400 focus:outline-none focus:shadow-outline">
+                                    Create Booking
+                                </button>
                             </li>
                         ))}
                     </ul>
