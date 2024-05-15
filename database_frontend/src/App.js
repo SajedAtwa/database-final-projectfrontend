@@ -18,6 +18,9 @@ import AboutUs from './components/clean_touch/AboutUs.js';
 
 //Business homepage
 import BusinessHomepage from './components/Business/BusinessHomepage.js';
+import CreateAvailability from './components/Business/CreateAvailability.js';
+import DeleteAvailability from './components/Business/DeleteAvailability.js';
+import UpdateAvailability from './components/Business/UpdateAvailability.js';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js'
@@ -46,12 +49,12 @@ function App() {
 
         <Route path='/clean_touch/company/:companyName' component={IndividualCompanyPage}/>
 
-        //Business homepage
-        <Route path='/business' component={BusinessHomepage}/>
-        <Route path='/business/create' component={BusinessHomepage}/>
-        <Route path='/business/delete' component={BusinessHomepage}/>
-        <Route path='/business/update' component={BusinessHomepage}/>
-        
+        {/*Business homepage*/}
+        <Route exact path='/business' component={BusinessHomepage}/>
+        <Route exact path='/business/create' component={CreateAvailability}/>
+        <Route exact path='/business/delete' component={DeleteAvailability}/>
+        <Route exact path='/business/update' component={UpdateAvailability}/>
+
       </Switch>
     </Router>
   );

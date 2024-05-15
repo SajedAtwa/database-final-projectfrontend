@@ -1,7 +1,6 @@
 import React from 'react';
 import BusinessHeader from './Header';  // Adjust the path as needed
 import BusinessFooter from './Footer';  // Adjust the path as needed
-import '../../static/css/clean_touch/HomePage.css';  // Adjust the path as needed
 
 function BusinessHomepage() {
   return (
