@@ -105,7 +105,7 @@ function BusinessDashboard() {
         }
         setLoading(false);
     };
-    
+
     const handleInputChange = (e) => {
         const { name, value, type, selectedOptions } = e.target;
         if (name === "services" && type === "select-multiple") {
@@ -122,9 +122,14 @@ function BusinessDashboard() {
         }
     };
 
+    const handleSwitchToUserDashboard = () => {
+        history.push('/dashboard'); // Navigate to the user dashboard
+    };
+
     return (
         <div className="business-container">
             <h1>Welcome, Business {businessId}</h1>
+            <button onClick={handleSwitchToUserDashboard}>Switch to User Dashboard</button>
             <button onClick={() => setShowCreateForm(!showCreateForm)}>
                 {showCreateForm ? 'Cancel' : 'Create Availability'}
             </button>
