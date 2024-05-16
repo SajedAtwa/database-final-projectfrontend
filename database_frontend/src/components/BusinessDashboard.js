@@ -10,12 +10,19 @@ function BusinessDashboard() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [showCreateForm, setShowCreateForm] = useState(false);
+
+    const getCurrentDateMidnight = () => {
+        const today = new Date();
+        return today.toISOString().split('T')[0] + 'T00:00';
+    };
+
     const [availabilityDetails, setAvailabilityDetails] = useState({
-        start_datetime: '',
-        end_datetime: '',
+        start_datetime: getCurrentDateMidnight(),
+        end_datetime: getCurrentDateMidnight(),
         services: [], 
         device: ''
     });
+
     const [availabilities, setAvailabilities] = useState([]);
 
     useEffect(() => {
@@ -61,8 +68,8 @@ function BusinessDashboard() {
             await createBusinessAvailability(userId, { start_datetime: formattedStartDatetime, end_datetime: formattedEndDatetime, start_time, end_time, services, device }, password);
             setShowCreateForm(false);
             setAvailabilityDetails({
-                start_datetime: '',
-                end_datetime: '',
+                start_datetime: getCurrentDateMidnight(),
+                end_datetime: getCurrentDateMidnight(),
                 services: [],
                 device: ''
             });
