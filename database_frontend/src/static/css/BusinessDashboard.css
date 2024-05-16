@@ -1,0 +1,117 @@
+/* BusinessDashboard.css */
+
+/* General styling for the business dashboard container */
+.business-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Styling for the main heading */
+.business-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Button styling */
+.business-container button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.business-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Form styling */
+.business-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.business-container form div {
+    display: flex;
+    flex-direction: column;
+}
+
+.business-container form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.business-container form input,
+.business-container form select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.business-container form select[multiple] {
+    height: auto;
+}
+
+.business-container form button {
+    align-self: center;
+    background-color: #28a745;
+}
+
+.business-container form button:hover {
+    background-color: #218838;
+}
+
+/* Loading and error messages */
+.business-container .loading,
+.business-container .error {
+    text-align: center;
+    color: #dc3545;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+/* Availabilities list */
+.availabilities-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.availabilities-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.availabilities-list li .delete-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: background-color 0.3s ease;
+}
+
+.availabilities-list li .delete-button:hover {
+    background-color: #c82333;
+}

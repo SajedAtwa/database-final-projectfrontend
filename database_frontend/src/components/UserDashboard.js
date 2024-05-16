@@ -166,12 +166,15 @@ function UserDashboard() {
 
     const userId = User.getUser("uid");
     const isRootUser = userId === 'root';
-
+    const handleSwitchToBusinessDashboard = () => {
+        history.push('/business-dashboard');
+    };
     return (
         <div className="user-container">
             <UserProfile user={user} onSaveProfile={onSaveProfile} />
             <div className="user-dashboard">
                 <h1>Welcome, {userId}!</h1>
+                <button onClick={handleSwitchToBusinessDashboard}>Switch to Business Dashboard</button>
                 {loading ? <div>Loading bookings...</div> : error ? <div>Error: {error}</div> : (
                     <div className="max-w-2xl mx-auto mt-24">
                         <h2>Your Bookings</h2>
