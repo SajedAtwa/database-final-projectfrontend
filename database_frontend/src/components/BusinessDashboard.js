@@ -19,6 +19,7 @@ function BusinessDashboard() {
         services: [], 
         device: ''
     });
+    const [availabilities, setAvailabilities] = useState([]);
 
     useEffect(() => {
         if (!User.getUser("uid")) {
@@ -29,10 +30,17 @@ function BusinessDashboard() {
         const userId = User.getUser("uid");
         const password = User.getUser("password");
 
-        const savedBusinessId = localStorage.getItem('businessId');
-        if (savedBusinessId) {
-            setBusinessId(savedBusinessId);
-            fetchBookings(savedBusinessId, userId, password);
+        if (userId) {
+            console.log('Fetching availabilities for business:', userId);
+            listBusinessAvailabilities(userId, password)
+                .then(availabilities => {
+                    console.log('Availabilities fetched:', availabilities);
+                    setAvailabilities(availabilities);
+                })
+                .catch(error => {
+                    console.error('Failed to fetch availabilities:', error);
+                    setError('Failed to fetch availabilities');
+                });
         }
     }, [history]);
 
@@ -84,8 +92,6 @@ function BusinessDashboard() {
                 services: [],
                 device: ''
             });
-            const availabilities = await listBusinessAvailabilities(userId, password);
-            console.log('List of availabilities:', availabilities);
         } catch (error) {
             setError('Failed to create availability');
         }
@@ -110,13 +116,16 @@ function BusinessDashboard() {
         const password = User.getUser("password");
         setLoading(true);
         try {
-            await deleteBusinessAvailability(businessId, availabilityId, password);
-            fetchBookings(businessId, userId, password);
+            await deleteBusinessAvailability(userId, availabilityId, password);
+            // After deleting, fetch and update the availabilities list
+            const updatedAvailabilities = availabilities.filter(id => id !== availabilityId);
+            setAvailabilities(updatedAvailabilities);
         } catch (error) {
-            setError('Failed to delete availability');
+            window.alert('Failed to delete availability');
         }
         setLoading(false);
     };
+  
 
     const handleInputChange = (e) => {
         const { name, value, type, selectedOptions } = e.target;
@@ -208,20 +217,24 @@ function BusinessDashboard() {
                     <button type="submit">Create</button>
                 </form>
             )}
-            {loading ? <div>Loading...</div> :
-                error ? <div>Error: {error}</div> :
-                    <div>
-                        <h2>Bookings</h2>
-                        <ul className="bookings-list">
-                            {bookings.map(booking => (
-                                <li key={booking.id} className="booking-item">
-                                    <h3>{booking.customerName} - {booking.serviceName}</h3>
-                                    <button className="cancel-button" onClick={() => handleCancelBooking(booking.id)}>Cancel</button>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-            }
+                {loading ? <div>Loading...</div> :
+                    error ? <div>Error: {error}</div> :
+                        <div>
+                            <h2>Availabilities Created</h2>
+                            <ul>
+                                {availabilities.info.length > 0 ? (
+                                    availabilities.info.map(availabilityId => (
+                                        <li key={availabilityId}>
+                                            {availabilityId}
+                                            <button onClick={() => handleDeleteAvailability(availabilityId)}>Delete</button>
+                                        </li>
+                                    ))
+                                ) : (
+                                    <li>No availabilities found.</li>
+                                )}
+                            </ul>
+                        </div>
+                }
         </div>
     );
 }

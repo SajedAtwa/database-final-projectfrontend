@@ -48,14 +48,18 @@ export const updateBusinessAvailability = async (uid, availabilityId, updatedDet
     }
 };
 
-export const deleteBusinessAvailability = async (uid, availabilityId, password) => {
+export const deleteBusinessAvailability = async (userId, availabilityId, password) => {
     try {
         const backendServer = process.env.BACKEND_SERVER || 'http://localhost:5000';
         const response = await axios.post(`${backendServer}/availabilities/delete`, {
-            uid,
+            uid: userId,
             availabilityId,
             password
         });
+        if (response.data.error) {
+            console.error('Error deleting availability:', response.data.error);
+            throw new Error(response.data.error);
+        }
         console.log('Availability deleted:', response.data);
         return response.data;
     } catch (error) {
@@ -63,6 +67,7 @@ export const deleteBusinessAvailability = async (uid, availabilityId, password) 
         throw error;
     }
 };
+
 
 export async function listBusinessAvailabilities(businessId, password) {
     try {
