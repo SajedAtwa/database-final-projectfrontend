@@ -15,13 +15,17 @@ function BusinessDashboard() {
 
     const getCurrentDateMidnight = () => {
         const today = new Date();
-        return today.toISOString().split('T')[0] + 'T00:00';
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const options = { timeZone: timezone, hour: 'numeric', minute: 'numeric', second: 'numeric' };
+        const formatter = new Intl.DateTimeFormat('en-US', options);
+        const dateStr = formatter.format(today);
+        return dateStr.split(',')[0];
     };
 
     const [availabilityDetails, setAvailabilityDetails] = useState({
         start_datetime: getCurrentDateMidnight(),
         end_datetime: getCurrentDateMidnight(),
-        services: [], 
+        services: [],
         device: ''
     });
 
@@ -61,12 +65,12 @@ function BusinessDashboard() {
             const formattedEndDatetime = end_datetime.replace('T', ' ') + ":00.000";
             const start_time = start_datetime.split('T')[1];
             const end_time = end_datetime.split('T')[1];
-    
+
             if (!userId) {
                 console.error('User ID is missing or not retrieved correctly.');
                 return;
             }
-    
+
             await createBusinessAvailability(userId, { start_datetime: formattedStartDatetime, end_datetime: formattedEndDatetime, start_time, end_time, services, device }, password);
             setShowCreateForm(false);
             setAvailabilityDetails({
@@ -76,7 +80,7 @@ function BusinessDashboard() {
                 device: ''
             });
             alert('Availability Created Successfully');
-    
+
             // Fetch updated availabilities after creating a new one
             const updatedAvailabilities = await listBusinessAvailabilities(userId, password);
             setAvailabilities(updatedAvailabilities);
@@ -85,7 +89,7 @@ function BusinessDashboard() {
         }
         setLoading(false);
     };
-    
+
     const handleUpdateAvailability = async (availabilityId, updatedDetails) => {
         const userId = User.getUser("uid");
         const password = User.getUser("password");
@@ -105,7 +109,7 @@ function BusinessDashboard() {
         try {
             await deleteBusinessAvailability(userId, availabilityId, password);
             alert('Availability Deleted Successfully');
-    
+
             // Fetch updated availabilities after deleting one
             const updatedAvailabilities = await listBusinessAvailabilities(userId, password);
             setAvailabilities(updatedAvailabilities);
@@ -133,6 +137,23 @@ function BusinessDashboard() {
 
     const handleSwitchToUserDashboard = () => {
         history.push('/dashboard'); // Navigate to the user dashboard
+    };
+
+    const handleExportDatabase = async () => {
+        const userId = User.getUser("uid");
+        const password = User.getUser("password");
+        let { start_datetime, end_datetime } = availabilityDetails;
+
+        // Format the date and time strings
+        start_datetime = start_datetime.replace('T', ' ') + ":00.000";
+        end_datetime = end_datetime.replace('T', ' ') + ":00.000";
+
+        try {
+            await exportDatabase(userId, password, start_datetime, end_datetime);
+            alert('Database Exported Successfully');
+        } catch (error) {
+            setError('Failed to export database');
+        }
     };
 
     return (
@@ -224,6 +245,7 @@ function BusinessDashboard() {
                             required
                         />
                     </div>
+                    <button type="button" onClick={handleExportDatabase}>Export Database</button>
                 </form>
             )}
             {loading ? <div className="loading">Loading...</div> :
