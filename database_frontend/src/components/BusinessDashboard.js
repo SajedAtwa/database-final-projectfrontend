@@ -7,7 +7,6 @@ import * as User from "../Users.js";
 function BusinessDashboard() {
     const history = useHistory();
     const [businessId, setBusinessId] = useState('');
-    const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [showCreateForm, setShowCreateForm] = useState(false);
@@ -67,6 +66,11 @@ function BusinessDashboard() {
                 services: [],
                 device: ''
             });
+            alert('Availability Created Successfully');
+    
+            // Fetch updated availabilities after creating a new one
+            const updatedAvailabilities = await listBusinessAvailabilities(userId, password);
+            setAvailabilities(updatedAvailabilities);
         } catch (error) {
             setError('Failed to create availability');
         }
@@ -91,14 +95,17 @@ function BusinessDashboard() {
         setLoading(true);
         try {
             await deleteBusinessAvailability(userId, availabilityId, password);
-            const updatedAvailabilities = availabilities.filter(id => id !== availabilityId);
+            alert('Availability Deleted Successfully');
+    
+            // Fetch updated availabilities after deleting one
+            const updatedAvailabilities = await listBusinessAvailabilities(userId, password);
             setAvailabilities(updatedAvailabilities);
         } catch (error) {
-            window.alert('Failed to delete availability');
+            setError('Failed to delete availability');
         }
         setLoading(false);
-    };  
-
+    };
+    
     const handleInputChange = (e) => {
         const { name, value, type, selectedOptions } = e.target;
         if (name === "services" && type === "select-multiple") {
