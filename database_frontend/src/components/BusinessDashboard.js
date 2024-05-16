@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { createBusinessAvailability, updateBusinessAvailability, deleteBusinessAvailability, listBusinessAvailabilities } from '../db methods/dbBusiness';
+import { exportDatabase } from '../db methods/dbExport';
 import '../static/css/BusinessDashboard.css';
 import * as User from "../Users.js";
 
@@ -10,6 +11,7 @@ function BusinessDashboard() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [showCreateForm, setShowCreateForm] = useState(false);
+    const [showDateForm, setShowDateForm] = useState(false);
 
     const getCurrentDateMidnight = () => {
         const today = new Date();
@@ -140,6 +142,9 @@ function BusinessDashboard() {
             <button onClick={() => setShowCreateForm(!showCreateForm)}>
                 {showCreateForm ? 'Cancel' : 'Create Availability'}
             </button>
+            <button onClick={() => setShowDateForm(!showDateForm)}>
+                {showDateForm ? 'Cancel' : 'Show Date Form'}
+            </button>
             {showCreateForm && (
                 <form onSubmit={handleCreateAvailability}>
                     <div>
@@ -195,6 +200,30 @@ function BusinessDashboard() {
                         </select>
                     </div>
                     <button type="submit">Create</button>
+                </form>
+            )}
+            {showDateForm && (
+                <form>
+                    <div>
+                        <label>Start Date and Time</label>
+                        <input
+                            type="datetime-local"
+                            name="start_datetime"
+                            value={availabilityDetails.start_datetime}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>End Date and Time</label>
+                        <input
+                            type="datetime-local"
+                            name="end_datetime"
+                            value={availabilityDetails.end_datetime}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
                 </form>
             )}
             {loading ? <div className="loading">Loading...</div> :
