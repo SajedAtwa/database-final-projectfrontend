@@ -124,8 +124,7 @@ function BusinessDashboard() {
             window.alert('Failed to delete availability');
         }
         setLoading(false);
-    };
-  
+    };  
 
     const handleInputChange = (e) => {
         const { name, value, type, selectedOptions } = e.target;
@@ -222,16 +221,14 @@ function BusinessDashboard() {
                         <div>
                             <h2>Availabilities Created</h2>
                             <ul>
-                                {availabilities.info.length > 0 ? (
-                                    availabilities.info.map(availabilityId => (
-                                        <li key={availabilityId}>
-                                            {availabilityId}
-                                            <button onClick={() => handleDeleteAvailability(availabilityId)}>Delete</button>
-                                        </li>
-                                    ))
-                                ) : (
-                                    <li>No availabilities found.</li>
-                                )}
+                                {availabilities.info && availabilities.info.length > 0 ? (
+    availabilities.info.map(availabilityId => (
+        <li key={availabilityId}>{availabilityId}</li>
+    ))
+) : (
+    <li>No availabilities found.</li>
+)}
+
                             </ul>
                         </div>
                 }
