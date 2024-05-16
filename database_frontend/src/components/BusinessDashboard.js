@@ -11,9 +11,8 @@ function BusinessDashboard() {
     const [error, setError] = useState('');
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [availabilityDetails, setAvailabilityDetails] = useState({
-        date: '',
-        start_time: '',
-        end_time: '',
+        start_datetime: '',
+        end_datetime: '',
         services: [], 
         device: ''
     });
@@ -48,21 +47,22 @@ function BusinessDashboard() {
         const password = User.getUser("password");
         setLoading(true);
         try {
-            const { date, start_time, end_time, services, device } = availabilityDetails;
-            const start_datetime = `${date} ${start_time}:00.000`;
-            const end_datetime = `${date} ${end_time}:00.000`;
+            const { start_datetime, end_datetime, services, device } = availabilityDetails;
+            const formattedStartDatetime = start_datetime.replace('T', ' ') + ":00.000";
+            const formattedEndDatetime = end_datetime.replace('T', ' ') + ":00.000";
+            const start_time = start_datetime.split('T')[1];
+            const end_time = end_datetime.split('T')[1];
     
             if (!userId) {
                 console.error('User ID is missing or not retrieved correctly.');
                 return;
             }
     
-            await createBusinessAvailability(userId, { start_datetime, end_datetime, start_time, end_time, services, device }, password);
+            await createBusinessAvailability(userId, { start_datetime: formattedStartDatetime, end_datetime: formattedEndDatetime, start_time, end_time, services, device }, password);
             setShowCreateForm(false);
             setAvailabilityDetails({
-                date: '',
-                start_time: '',
-                end_time: '',
+                start_datetime: '',
+                end_datetime: '',
                 services: [],
                 device: ''
             });
@@ -136,31 +136,21 @@ function BusinessDashboard() {
             {showCreateForm && (
                 <form onSubmit={handleCreateAvailability}>
                     <div>
-                        <label>Date</label>
+                        <label>Start Date and Time</label>
                         <input
-                            type="date"
-                            name="date"
-                            value={availabilityDetails.date}
+                            type="datetime-local"
+                            name="start_datetime"
+                            value={availabilityDetails.start_datetime}
                             onChange={handleInputChange}
                             required
                         />
                     </div>
                     <div>
-                        <label>Start Time</label>
+                        <label>End Date and Time</label>
                         <input
-                            type="time"
-                            name="start_time"
-                            value={availabilityDetails.start_time}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>End Time</label>
-                        <input
-                            type="time"
-                            name="end_time"
-                            value={availabilityDetails.end_time}
+                            type="datetime-local"
+                            name="end_datetime"
+                            value={availabilityDetails.end_datetime}
                             onChange={handleInputChange}
                             required
                         />
