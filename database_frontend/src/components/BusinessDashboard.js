@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { createBusinessAvailability, updateBusinessAvailability, deleteBusinessAvailability, listBusinessAvailabilities} from '../db methods/dbBusiness';
+import { createBusinessAvailability, updateBusinessAvailability, deleteBusinessAvailability, listBusinessAvailabilities } from '../db methods/dbBusiness';
 import '../static/css/BusinessDashboard.css';
 import * as User from "../Users.js";
 
@@ -91,7 +91,6 @@ function BusinessDashboard() {
         setLoading(true);
         try {
             await deleteBusinessAvailability(userId, availabilityId, password);
-            // After deleting, fetch and update the availabilities list
             const updatedAvailabilities = availabilities.filter(id => id !== availabilityId);
             setAvailabilities(updatedAvailabilities);
         } catch (error) {
@@ -184,31 +183,30 @@ function BusinessDashboard() {
                             <option value={1}>Screen Repair</option>
                             <option value={2}>Camera Repair</option>
                             <option value={3}>Battery Replacement</option>
-                            {/* Add more options as necessary */}
                         </select>
                     </div>
                     <button type="submit">Create</button>
                 </form>
             )}
-                {loading ? <div>Loading...</div> :
-                    error ? <div>Error: {error}</div> :
-                        <div>
-                            <h2>Availabilities Created</h2>
-                            <ul>
-                                {availabilities.info && availabilities.info.length > 0 ? (
-                                    availabilities.info.map(availabilityId => (
-                                        <li key={availabilityId}>
-                                            {availabilityId}
-                                            <button onClick={() => handleDeleteAvailability(availabilityId)}>Delete</button>
-                                        </li>
-                                    ))
-                                ) : (
-                                    <li>No availabilities found.</li>
-                                )}
-                            </ul>
-                        </div>
-                }
-            </div>
+            {loading ? <div className="loading">Loading...</div> :
+                error ? <div className="error">Error: {error}</div> :
+                    <div>
+                        <h2>Availabilities Created</h2>
+                        <ul className="availabilities-list">
+                            {availabilities.info && availabilities.info.length > 0 ? (
+                                availabilities.info.map(availabilityId => (
+                                    <li key={availabilityId} className="availability-item">
+                                        {availabilityId}
+                                        <button className="delete-button" onClick={() => handleDeleteAvailability(availabilityId)}>Delete</button>
+                                    </li>
+                                ))
+                            ) : (
+                                <li>No availabilities found.</li>
+                            )}
+                        </ul>
+                    </div>
+            }
+        </div>
     );
 }
 

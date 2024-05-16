@@ -53,7 +53,7 @@ export const deleteBusinessAvailability = async (userId, availabilityId, passwor
         const backendServer = process.env.BACKEND_SERVER || 'http://localhost:5000';
         const response = await axios.post(`${backendServer}/availabilities/delete`, {
             uid: userId,
-            availabilityId,
+            id:availabilityId,
             password
         });
         if (response.data.error) {
