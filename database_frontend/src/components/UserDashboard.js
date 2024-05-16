@@ -103,7 +103,8 @@ function UserDashboard() {
         const password = User.getUser("password");
         try {
             await initializeBalance(userId, password);
-            handleViewBalance();  
+            handleViewBalance();
+            alert('Balanced Initialized Successfully'); 
         } catch (error) {
             alert(`Failed to initialize balance: ${error.message}`);
         }
@@ -122,12 +123,12 @@ function UserDashboard() {
 
     const handleImportToBalance = async () => {
         const input = prompt("Enter amount to add:");
-        const amount = parseInt(input, 10); 
-        if (isNaN(amount) || amount <= 0) { 
-            alert("Please enter a valid positive integer.");
+        const amount = parseFloat(input); 
+        if (isNaN(amount) || amount <= 0 || !/^\d+(\.\d{1,2})?$/.test(input)) { 
+            alert("Please enter a valid positive number (with up to two decimal places).");
             return; 
         }
-
+    
         const userId = User.getUser("uid");
         const password = User.getUser("password");
         try {
@@ -136,16 +137,16 @@ function UserDashboard() {
         } catch (error) {
             alert(`Failed to add funds: ${error.message}`);
         }
-    };
+    };    
 
     const handleExportFromBalance = async () => {
         const input = prompt("Enter amount to export:");
-        const amount = parseInt(input, 10); 
-        if (isNaN(amount) || amount <= 0) { 
-            alert("Please enter a valid positive integer.");
+        const amount = parseFloat(input); 
+        if (isNaN(amount) || amount <= 0 || !/^\d+(\.\d{1,2})?$/.test(input)) { 
+            alert("Please enter a valid positive number (with up to two decimal places).");
             return; 
         }
-
+    
         const userId = User.getUser("uid");
         const password = User.getUser("password");
         try {
@@ -155,6 +156,7 @@ function UserDashboard() {
             alert(`Failed to export funds: ${error.message}`);
         }
     };
+    
 
     const onSaveProfile = (userData) => {
         setUser(userData);
