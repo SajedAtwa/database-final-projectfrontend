@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { fetchBusinessBookings, cancelBusinessBooking } from '../db methods/dbBusinessBookings';
-import { createBusinessAvailability, updateBusinessAvailability, deleteBusinessAvailability } from '../db methods/dbBusiness';
+import { createBusinessAvailability, updateBusinessAvailability, deleteBusinessAvailability, listBusinessAvailabilities} from '../db methods/dbBusiness';
 import '../static/css/BusinessDashboard.css';
 import * as User from "../Users.js";
 
@@ -16,7 +16,7 @@ function BusinessDashboard() {
         date: '',
         start_time: '',
         end_time: '',
-        services: '',
+        services: [], 
         device: ''
     });
 
@@ -81,15 +81,16 @@ function BusinessDashboard() {
                 date: '',
                 start_time: '',
                 end_time: '',
-                services: '',
+                services: [],
                 device: ''
             });
+            const availabilities = await listBusinessAvailabilities(userId, password);
+            console.log('List of availabilities:', availabilities);
         } catch (error) {
             setError('Failed to create availability');
         }
         setLoading(false);
     };
-      
     
     const handleUpdateAvailability = async (availabilityId, updatedDetails) => {
         const userId = User.getUser("uid");
@@ -118,11 +119,19 @@ function BusinessDashboard() {
     };
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setAvailabilityDetails(prevDetails => ({
-            ...prevDetails,
-            [name]: value
-        }));
+        const { name, value, type, selectedOptions } = e.target;
+        if (name === "services" && type === "select-multiple") {
+            const values = Array.from(selectedOptions, option => option.value);
+            setAvailabilityDetails(prevDetails => ({
+                ...prevDetails,
+                [name]: values
+            }));
+        } else {
+            setAvailabilityDetails(prevDetails => ({
+                ...prevDetails,
+                [name]: value
+            }));
+        }
     };
 
     return (
@@ -187,12 +196,13 @@ function BusinessDashboard() {
                             name="services"
                             value={availabilityDetails.services}
                             onChange={handleInputChange}
+                            multiple
                             required
                         >
-                            <option value="" disabled>Select a Service to Offer</option>
-                            <option value="SCREEN_REPAIR">Screen Repair</option>
-                            <option value="CAMERA_REPAIR">Camera Repair</option>
-                            <option value="BATTERY_REPLACEMENT">Battery Replacement</option>
+                            <option value={1}>Screen Repair</option>
+                            <option value={2}>Camera Repair</option>
+                            <option value={3}>Battery Replacement</option>
+                            {/* Add more options as necessary */}
                         </select>
                     </div>
                     <button type="submit">Create</button>

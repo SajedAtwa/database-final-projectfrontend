@@ -64,4 +64,26 @@ export const deleteBusinessAvailability = async (uid, availabilityId, password) 
     }
 };
 
-export default { createBusinessAvailability, updateBusinessAvailability, deleteBusinessAvailability };
+export async function listBusinessAvailabilities(businessId, password) {
+    try {
+        const backendServer = process.env.BACKEND_SERVER || 'http://localhost:5000'; 
+        console.log('Requesting to list availabilities for business:', businessId);
+        const response = await axios.post(`${backendServer}/availabilities/list`, {
+            uid: businessId,
+            password
+        });
+        console.log('Response from listing availabilities:', response.data);
+
+        if (response.data.error) {
+            console.error('Error from backend:', response.data.error);
+            throw new Error(response.data.error);
+        }
+
+        return response.data;
+    } catch (error) {
+        console.error('Error listing availabilities:', error);
+        throw error;
+    }
+}
+
+export default { createBusinessAvailability, updateBusinessAvailability, deleteBusinessAvailability, listBusinessAvailabilities };
