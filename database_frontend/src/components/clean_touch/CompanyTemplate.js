@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import data from "../../static/clean_touch_companyData.json";  // Assuming data is structured as shown
 import CleanTouchHeader from './Header';
 import CleanTouchFooter from './Footer';
-import 'C:/Users/User1/Downloads/database-final-projectfrontend-main/database_frontend/src/static/css/clean_touch/CompanyTemplate.css';
+import "../src/static/css/clean_touch/CompanyTemplate.css";
 
 /*
 function EachCompanyPage({ companyInfo }) {
