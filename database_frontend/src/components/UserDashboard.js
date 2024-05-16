@@ -78,6 +78,7 @@ function UserDashboard() {
                 delete updatedBookings[bookingId];
                 setBookings(updatedBookings);
                 alert('Booking deleted successfully');
+                handleViewBalance();
             })
             .catch(err => {
                 alert('Failed to delete booking');
