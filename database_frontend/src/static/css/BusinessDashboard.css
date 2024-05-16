@@ -94,15 +94,25 @@
 .availabilities-list li {
     display: flex;
     justify-content: space-between;
+    align-items: center; /* Center items vertically */
     padding: 10px;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 4px;
     margin-bottom: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+    font-family: 'Roboto', sans-serif; /* Use a different font family */
+}
+
+.availabilities-list li .availability-id {
+    font-weight: bold;
+    flex: 1; /* Take up remaining space */
+    margin-right: 10px; /* Add spacing between text and button */
 }
 
 .availabilities-list li .delete-button {
+    flex: 0; /* Prevent button from growing */
+    margin-left: 10px; /* Add spacing between buttons */
     background-color: #dc3545;
     color: #fff;
     border: none;
