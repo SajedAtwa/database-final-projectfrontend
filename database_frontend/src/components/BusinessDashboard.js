@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { fetchBusinessBookings, cancelBusinessBooking } from '../db methods/dbBusinessBookings';
 import { createBusinessAvailability, updateBusinessAvailability, deleteBusinessAvailability, listBusinessAvailabilities} from '../db methods/dbBusiness';
 import '../static/css/BusinessDashboard.css';
 import * as User from "../Users.js";
@@ -44,30 +43,6 @@ function BusinessDashboard() {
         }
     }, [history]);
 
-    const fetchBookings = async (businessId, userId, password) => {
-        setLoading(true);
-        try {
-            const bookings = await fetchBusinessBookings(businessId, userId, password);
-            setBookings(bookings);
-        } catch (error) {
-            setError('Failed to fetch bookings');
-        }
-        setLoading(false);
-    };
-
-    const handleCancelBooking = async (bookingId) => {
-        const userId = User.getUser("uid");
-        const password = User.getUser("password");
-        setLoading(true);
-        try {
-            await cancelBusinessBooking(businessId, bookingId);
-            fetchBookings(businessId, userId, password);
-        } catch (error) {
-            setError('Failed to cancel booking');
-        }
-        setLoading(false);
-    };
-
     const handleCreateAvailability = async (e) => {
         e.preventDefault();
         const userId = User.getUser("uid");
@@ -104,7 +79,6 @@ function BusinessDashboard() {
         setLoading(true);
         try {
             await updateBusinessAvailability(businessId, availabilityId, updatedDetails, password);
-            fetchBookings(businessId, userId, password);
         } catch (error) {
             setError('Failed to update availability');
         }
